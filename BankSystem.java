@@ -23,13 +23,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -474,7 +477,24 @@ class BankSystem implements Serializable {
 	}
         
         void displayTable() {
-         
+            Stage stg = createStage("Bank Accounts");
+            Label lb1 = new Label("Number");
+            GridPane window = createGridPane();
+            
+            final ObservableList data = FXCollections.observableArrayList();
+            data.addAll(users);
+            final ListView listView = new ListView(data);
+            listView.setPrefSize(500, 250);
+            listView.setEditable(false);
+            listView.autosize();
+            listView.setItems(data);
+            listView.setCellFactory(ComboBoxListCell.forListView(data));   
+            StackPane root = new StackPane();
+            root.getChildren().add(lb1);
+            root.getChildren().add(listView);
+            window.add(lb1, 1, 1);
+            stg.setScene(new Scene(root, 500, 250));
+            stg.show();
         }
         
 	void displayAll () {

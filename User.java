@@ -28,7 +28,11 @@ class User implements java.io.Serializable {
 	void display () {
 		System.out.println(systemNumber + "\t" + firstname + "\t" + lastname + "\t" + pesel + "\t" + adress + "\t" + account.getResources());
 	}
-
+        
+        @Override
+        public String toString() {
+            return systemNumber + "\t" + firstname + "\t" + lastname + "\t" + pesel + "\t" + adress + "\t" + account.getResources();
+        }
 
 	int getNumber() {
 		return systemNumber;
