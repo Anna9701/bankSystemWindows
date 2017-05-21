@@ -22,6 +22,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.WindowEvent;
 /**
  *
@@ -67,11 +69,13 @@ public class Bank extends Application {
         lbl1.setMnemonicParsing(true);
         btn2.setOnAction(mbh);
         btn1.setOnAction(mbh);
-      
+        btn1.setMinWidth(100);
+        btn2.setMinWidth(100);
+        
         root.add(lbl1, 0, 0);
         root.add(field1, 2, 0);
-        root.add(btn1, 1, 3);
-        root.add(btn2, 2, 3);
+        root.add(btn1, 2, 3);
+        root.add(btn2, 1, 3);
         
         GridPane.setHalignment(lbl1, HPos.RIGHT);
         
@@ -102,12 +106,17 @@ public class Bank extends Application {
         Button btn7 = new Button("Display information about specific accounts");
         Button btn8 = new Button("Save State");
         Button buttons[] = {btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8};
+        Label lb = new Label("Welcome in our Bank System!");
+        lb.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        lb.setPadding(new Insets(15, 15, 15, 15));
+        mainWindow.add(lb, 1, 1);
         
         int start = 3;
         int id = 1;
         for (Button button : buttons) {
             mainWindow.add(button, 1, start++);
             button.setId(Integer.toString(id++));
+            button.setMinWidth(400);
             button.setOnAction(mbh);
         }
         

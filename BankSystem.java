@@ -12,6 +12,8 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -43,8 +45,8 @@ class BankSystem implements Serializable {
                             this.users = tmp1.users;
                             this.filename = tmp1.filename;
                     } catch (Exception e) {
-                            System.out.println("Exception while load bank state");
-                            System.exit(1);
+                            alert("We can't load this bank database! Sorry!");
+                            Platform.exit();
                     }
                 } else {
                     filename = file;
@@ -60,28 +62,37 @@ class BankSystem implements Serializable {
 			oos.flush();
 			oos.close();
 		} catch (IOException e) {
-			System.out.println("Exception while save bank state");
-			e.printStackTrace();
-			System.exit(2);
+			alert("Exception while save bank state");
 		}
 	}
 
 	void deleteUser() {
-		User todelete;
-		try {
-			todelete = enterUserNumber("delete");
-			if(confirm("delete", todelete)) {
-				deleteUser(todelete);
-			}
-		} catch (NoUserFindException e1) {
-			System.out.println("No such user find!");
-		}
+            Stage stg = createStage("Delete User");
+            try {
+                int todelete = enterUserNumber("delete", stg);
+                User tmp = findByNumber(todelete);
+                if(confirm("delete", tmp)) {
+                        deleteUser(tmp);
+                }
+            } catch (NoUserFindException er) {
+                alert("No such user found");
+            }  
 	}
 
+        
+        void alert(String text) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(text);
+            alert.showAndWait();
+        }
+        
 	void toPay() {
-		User topay;
-		try {
-			topay = enterUserNumber("payment");
+            Stage stg = new Stage();	
+            User topay;
+		try {   
+                        int number = enterUserNumber("payment", stg);
+			topay = findByNumber(number);
 			if(confirm("payment", topay)) {
 				payIn(topay);
 			}
@@ -92,8 +103,10 @@ class BankSystem implements Serializable {
 
 	void toTake() {
 		User totake;
+                Stage stg = new Stage();
 		try {
-			totake = enterUserNumber("pay out");
+                        int number = enterUserNumber("pay out", stg);
+			totake = findByNumber(number);
 			if(confirm("payout", totake)) {
 				try {
 					payOut(totake);
@@ -107,7 +120,6 @@ class BankSystem implements Serializable {
 	}
 
 	void menu(int choise) {
-	//	do{
 			switch(choise) {
 				case 1:
 					addUser();
@@ -134,7 +146,6 @@ class BankSystem implements Serializable {
 					saveState();
 					break;
 				}
-
 	}
 
 	private boolean confirm (String text) {
@@ -156,7 +167,7 @@ class BankSystem implements Serializable {
             alert.setTitle("Confirmation");
             alert.setContentText("Do you really want to " + text + " this user?\n\n" + u.toString());
             alert.setResizable(true);
-
+            alert.getDialogPane().setPrefWidth(600);
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
                 return true;
@@ -164,16 +175,26 @@ class BankSystem implements Serializable {
             return false;
 	}
         
-
+        Stage createStage(String text) {
+            Stage stg = new Stage();
+            stg.setTitle(text);
+            
+            
+            return stg;
+        }
+        GridPane createGridPane(){
+            GridPane mainWindow = new GridPane();
+            mainWindow.setVgap(10);
+            mainWindow.setHgap(10);
+            mainWindow.setPadding(new Insets(15, 15, 15, 15));
+            
+            return mainWindow;
+        }
+        
 	void addUser() {
+                Stage stg = createStage("Add user");
+                GridPane mainWindow = createGridPane();
                 
-                Stage stg = new Stage();
-                stg.setTitle("Add user");
-                GridPane mainWindow = new GridPane();
-                mainWindow.setVgap(10);
-                mainWindow.setHgap(10);
-                mainWindow.setPadding(new Insets(15, 15, 15, 15));
-               
                 Label label1 = new Label("System Number:");
                 final TextField textField1 = new TextField ();
                 Label label2 = new Label("First name:");
@@ -224,6 +245,11 @@ class BankSystem implements Serializable {
                 stg.show();
                 
 	}
+
+    private void deleteUser(User todelete) {
+       users.remove(todelete);
+    }
+
         
         
         private class cancelButton implements EventHandler<ActionEvent> {
@@ -244,17 +270,47 @@ class BankSystem implements Serializable {
 		}
 	}
 
-	private User enterUserNumber (String text) throws NoUserFindException {
-		System.out.println("Enter system number of user to " + text);
-		int number = in.nextInt();
-		try {
-			User tmp = this.findByNumber(number);
-			return tmp;
-		} catch (NoUserFindException e) {
-			throw e;
-		}
+	private int enterUserNumber (String text, Stage stg) throws NoUserFindException {
+     
+            GridPane mainWindow = createGridPane();
+           
+            Label lb = new Label("Enter system number of user to " + text);
+            TextField tf = new TextField();
+            mainWindow.add(lb, 1, 1);
+            mainWindow.add(tf, 2, 1);
+            Button btn1 = new Button("Enter");
+            Button btn2 = new Button("Cancel");
+            mainWindow.add(btn1, 1, 2);
+            mainWindow.add(btn2, 2, 2);
+            btn2.setOnAction(new cancelButton(stg));
+            
+            enterUserNumberButton handler = new enterUserNumberButton(tf, stg);
+            btn1.setOnAction(handler);
+            
+            Scene scene = new Scene(mainWindow);
+            stg.setScene(scene);
+            stg.showAndWait();
+       
+           
+           return handler.number;
 	}
-
+        
+        class enterUserNumberButton implements EventHandler<ActionEvent> {
+            TextField tf;
+            int number;
+            Stage stg;
+            
+            enterUserNumberButton(TextField text, Stage stag) {
+                tf = text;
+                stg = stag;
+            }
+            @Override
+            public void handle(ActionEvent e) {
+                    number = Integer.parseInt(tf.getText());
+                    stg.hide();
+            }
+        }
+        
 	void payIn(User topay) {
 		System.out.println("Enter amount of money to pay in: ");
 		double moneytopay = in.nextDouble();
@@ -311,9 +367,12 @@ class BankSystem implements Serializable {
 	void transferMoney() {
 		User user1, user2;
 		String txt1 = "pay in", txt2 = "take from";
+                Stage stg = new Stage();
 		try {
-			user1 = enterUserNumber (txt1);
-			user2 = enterUserNumber (txt2);
+			int number1 = enterUserNumber (txt1, stg);
+			int number2 = enterUserNumber (txt2, stg);
+                        user1 = findByNumber(number1);
+                        user2 = findByNumber(number2);
 		} catch (NoUserFindException e) {
 			System.out.println("No such user find.");
 			return;
@@ -332,10 +391,6 @@ class BankSystem implements Serializable {
 			System.out.println("No resources to do this!");
 		}
 	}
-
-	void deleteUser(User todelete) {
-		users.remove(todelete);
-}
 
 	void displayAll () {
 		System.out.println();
