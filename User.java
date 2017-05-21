@@ -16,17 +16,12 @@ class User implements java.io.Serializable {
 
         
 	User(int sNo, String fname, String lname, long p, String adr, double money){
-          /*  while((int)(Math.log10(pesel)+1) != 11) {
-			System.out.println("Wrong pesel");
-					pesel = in.nextLong();
-					in.nextLine();
-		}*/
-            systemNumber = sNo;
-            firstname = fname;
-            lastname = lname;
-            pesel = p;
-            adress = adr;
-            account = new Account (money);
+			systemNumber = sNo;
+			firstname = fname;
+			lastname = lname;
+			pesel = p;
+			adress = adr;
+			account = new Account (money);
 
 	}
 
@@ -34,11 +29,7 @@ class User implements java.io.Serializable {
 		System.out.println(systemNumber + "\t" + firstname + "\t" + lastname + "\t" + pesel + "\t" + adress + "\t" + account.getResources());
 	}
 
-        
-        @Override
-        public String toString() {
-            return systemNumber + "\t" + firstname + "\t" + lastname + "\t" + pesel + "\t" + adress + "\t" + account.getResources();
-        }
+
 	int getNumber() {
 		return systemNumber;
 	}
