@@ -24,10 +24,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 class BankSystem implements Serializable {
@@ -88,38 +94,43 @@ class BankSystem implements Serializable {
         }
         
 	void toPay() {
-            Stage stg = new Stage();	
+            Stage stg = createStage("Payment");	
             User topay;
 		try {   
                         int number = enterUserNumber("payment", stg);
 			topay = findByNumber(number);
 			if(confirm("payment", topay)) {
-				payIn(topay);
+				//payIn(topay, stg);
+                                try {
+                                    payment(topay, stg, 1);
+                                } catch (NoResourcesException er) {
+                                    
+                                }
 			}
 		} catch (NoUserFindException e1) {
-			System.out.println("No such user find!");
+			alert("No such user find!");
 		}
 	}
 
 	void toTake() {
 		User totake;
-                Stage stg = new Stage();
+                Stage stg = createStage("Payment");
 		try {
                         int number = enterUserNumber("pay out", stg);
 			totake = findByNumber(number);
 			if(confirm("payout", totake)) {
 				try {
-					payOut(totake);
+					payment(totake, stg, 0);
 				} catch (NoResourcesException e) {
-					System.out.println("There is no resources to do this!");
+					alert("There is no resources to do this!");
 				}
 			}
 		} catch (NoUserFindException e1) {
-			System.out.println("No such user find!");
+			alert("No such user find!");
 		}
 	}
 
-	void menu(int choise) {
+	void menu(int choise){
 			switch(choise) {
 				case 1:
 					addUser();
@@ -270,7 +281,7 @@ class BankSystem implements Serializable {
 		}
 	}
 
-	private int enterUserNumber (String text, Stage stg) throws NoUserFindException {
+	private int enterUserNumber (String text, Stage stg) {
      
             GridPane mainWindow = createGridPane();
            
@@ -310,85 +321,153 @@ class BankSystem implements Serializable {
                     stg.hide();
             }
         }
-        
-	void payIn(User topay) {
-		System.out.println("Enter amount of money to pay in: ");
-		double moneytopay = in.nextDouble();
-		if(moneytopay <= 0) {
-			System.out.println("You cannot pay in less than 0!");
-			return;
-		}
-		if(confirm("amount " + Double.toString(moneytopay))) {
-			topay.account.payment(moneytopay);
-		}
-	}
 
 	private void payIn(User topay, double money) {
 		topay.account.payment(money);
 	}
+        
+        void payment(User toPay, Stage stg, int mode) throws NoResourcesException {
+            GridPane mainWindow = createGridPane();
+            Label lb = new Label("Amount of money: ");
+            TextField textField1 = new TextField();
+            
+            Text lb2 = new Text();
+            DropShadow ds = new DropShadow();
+            ds.setOffsetY(3.0f);
+            ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+            lb2.setEffect(ds);
+            lb2.setCache(true);
+            lb2.setFill(Color.RED);
+            lb2.setFont(Font.font(null, FontWeight.BOLD, 12));
+            
+            Button b1 = new Button("Cancel");
+            Button b2 = new Button("Apply");
+            b1.setOnAction(new cancelButton(stg));
+            b2.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    double moneytopay = Double.parseDouble(textField1.getText());
+                    if(moneytopay <= 0 ){
+                        if(mode == 1) {
+                            lb2.setText("You cannot pay in less than 0!");
+                        } else {
+                            lb2.setText("You cannot pay out less than 0!");
+                        }
+                        textField1.clear();
+                    } else {
+                        if(mode == 1) {
+                            if(confirm("amount " + Double.toString(moneytopay))) {
+                                toPay.account.payment(moneytopay);
+                                stg.hide();
+                            }
+                        } else {
+                                try {
+                                    toPay.account.payout(moneytopay);
+                                    stg.hide();
+                                } catch (NoResourcesException ee) {
+                                    lb2.setText("There is no resources to do this!");
+                                    textField1.clear();
+                                }
+                        }
+                    }
+                }       
+            });
+            
+            mainWindow.add(lb, 1, 1);
+            mainWindow.add(textField1, 2, 1);
+            mainWindow.add(lb2, 1, 3);
+            mainWindow.add(b1, 2, 2);
+            mainWindow.add(b2, 1, 2);
+            Scene scene = new Scene(mainWindow);
+            stg.setScene(scene);
+            stg.show();
+        }
+        
+	
 
-	void payOut(User topayout) throws NoResourcesException {
-		System.out.println("Enter amount of money: ");
-		double moneytopayout = in.nextDouble();
-		if(moneytopayout <= 0) {
-			System.out.println("You cannot take less than 0!");
-			return;
-		}
-		if(confirm("amount " + Double.toString(moneytopayout))) {
-			try {
-				topayout.account.payout(moneytopayout);
-			} catch (NoResourcesException e) {
-				throw e;
-			}
-		}
-	}
+	private double payOutTransfer(User topayout, Stage stg) throws NoResourcesException {
+            GridPane mainWindow = createGridPane();
+            Label lb = new Label("Amount of money: ");
+            TextField textField1 = new TextField();
+            final int smtwentwrong = -1;
+            Text lb2 = new Text();
+            DropShadow ds = new DropShadow();
+            ds.setOffsetY(3.0f);
+            ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+            lb2.setEffect(ds);
+            lb2.setCache(true);
+            lb2.setFill(Color.RED);
+            lb2.setFont(Font.font(null, FontWeight.BOLD, 12));
+            
+            Button b1 = new Button("Cancel");
+            Button b2 = new Button("Apply");
+            b1.setOnAction(new cancelButton(stg));
+            b2.setOnAction(new EventHandler<ActionEvent>() {	
+                @Override
+                public void handle(ActionEvent e) {
+                    double amount = Double.parseDouble(textField1.getText());
+                    if(amount <= 0) {
+			lb2.setText("You cannot take less than 0!");
+			textField1.clear();
+                    } else {
+                        if(confirm("amount " + Double.toString(amount))) {
+                            try {
+                                topayout.account.payout(amount);
+                                stg.hide();
+                            } catch (NoResourcesException ee) {
+                                lb2.setText("There is no resources!");
+                                textField1.clear();
+                            }
+                        } 
+                    }
+		
+                }   
+            });
+	
+            mainWindow.add(lb, 1, 1);
+            mainWindow.add(textField1, 2, 1);
+            mainWindow.add(lb2, 1, 3);
+            mainWindow.add(b1, 2, 2);
+            mainWindow.add(b2, 1, 2);
+            Scene scene = new Scene(mainWindow);
+            stg.setScene(scene);
+            stg.showAndWait();
 
-	private double payOutTransfer(User topayout) throws NoResourcesException {
-		final int smtwentwrong = -1;
-		System.out.println("Enter amount of money: ");
-		double moneytopayout = in.nextDouble();
-		if(moneytopayout <= 0) {
-			System.out.println("You cannot take less than 0!");
-			return smtwentwrong;
-		}
-		if(confirm("amount " + Double.toString(moneytopayout))) {
-			try {
-				topayout.account.payout(moneytopayout);
-			} catch (NoResourcesException e) {
-				throw e;
-			}
-		} else {
-			moneytopayout = smtwentwrong;
-		}
-
-		return moneytopayout;
+            return Double.parseDouble(textField1.getText());
 	}
 
 	void transferMoney() {
 		User user1, user2;
 		String txt1 = "pay in", txt2 = "take from";
-                Stage stg = new Stage();
-		try {
-			int number1 = enterUserNumber (txt1, stg);
-			int number2 = enterUserNumber (txt2, stg);
-                        user1 = findByNumber(number1);
-                        user2 = findByNumber(number2);
+                Stage stg = createStage("transform");
+
+                try {
+                    int number1 = enterUserNumber (txt1, stg);
+                    user1 = findByNumber(number1);         
 		} catch (NoUserFindException e) {
-			System.out.println("No such user find.");
-			return;
+                    alert("No such user find.");
+                    stg.close();
+                    return;
 		}
-		try {
-			if(confirm(txt2, user2) && confirm(txt1, user1)) {
-				double money = payOutTransfer(user2);
-				if(money <= 0) {
-					return;
-				}
-				payIn(user1, money);
-			} else {
-				return;
-			}
+                
+                try {
+                    int number2 = enterUserNumber (txt2, stg);
+                    user2 = findByNumber(number2);
+                } catch (NoUserFindException e) {
+                    alert("No such user find.");
+                    stg.close();
+                    return;
+		}
+		
+                try {
+                    if(confirm(txt2, user2) && confirm(txt1, user1)) {
+                        double money = payOutTransfer(user2, stg);
+                        if(money > 0) {
+                            payIn(user1, money);
+                        }
+                    } 
 		} catch (NoResourcesException e) {
-			System.out.println("No resources to do this!");
+			alert("No resources to do this!");
 		}
 	}
 
@@ -410,7 +489,7 @@ class BankSystem implements Serializable {
 				it.next().display();
 			}
 		} catch (NoUserFindException e) {
-			System.out.println("No such user!");
+			alert("No such user!");
 			return;
 		}
 	}
@@ -465,7 +544,7 @@ class BankSystem implements Serializable {
 				usersfinded = findByAdress();
 				break;
 			default:
-				System.out.println("Something went wrong!");
+				alert("Something went wrong!");
 				break;
 			}
 		} catch (NoUserFindException e){
