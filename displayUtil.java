@@ -5,10 +5,17 @@
  */
 package bank;
 
+import javafx.scene.control.Alert;
+
 /**
  *
  * @author esperanza
  */
 public class displayUtil {
-    
+    void alert(String text) {
+       Alert alert = new Alert(Alert.AlertType.ERROR);
+       alert.setTitle("Error");
+       alert.setHeaderText(text);
+       alert.showAndWait();
+   }
 }
