@@ -11,41 +11,34 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.ArrayList;
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxListCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 class BankSystem implements Serializable {
     private ArrayList<User> users;
     private String filename;
     private transient Scanner in = new Scanner (System.in);
     private static findUtil find;
+    private static displayUtil display = new displayUtil();
 
     BankSystem(String file, int mode) {
         if(mode == 1) {
@@ -57,7 +50,7 @@ class BankSystem implements Serializable {
                 this.users = tmp1.users;
                 this.filename = tmp1.filename;
             } catch (Exception e) {
-                alert("We can't load this bank database! Sorry!");
+                display.alert("We can't load this bank database! Sorry!");
                 Platform.exit();
             }
         } else {
@@ -75,7 +68,7 @@ class BankSystem implements Serializable {
                 oos.flush();
                 oos.close();
         } catch (IOException e) {
-                alert("Exception while save bank state");
+                display.alert("Exception while save bank state");
         }
     }
 
@@ -88,17 +81,12 @@ class BankSystem implements Serializable {
                     deleteUser(tmp);
             }
         } catch (NoUserFindException er) {
-            alert("No such user found");
+            display.alert("No such user found");
         }  
     }
 
 
-    void alert(String text) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(text);
-        alert.showAndWait();
-    }
+   
 
     void toPay() {
         Stage stg = createStage("Payment");	
@@ -114,7 +102,7 @@ class BankSystem implements Serializable {
                     }
                 }
             } catch (NoUserFindException e1) {
-                alert("No such user find!");
+                display.alert("No such user find!");
             }
     }
 
@@ -128,11 +116,11 @@ class BankSystem implements Serializable {
                 try {
                     payment(totake, stg, 0);
                 } catch (NoResourcesException e) {
-                    alert("There is no resources to do this!");
+                    display.alert("There is no resources to do this!");
                 }
             }
         } catch (NoUserFindException e1) {
-            alert("No such user find!");
+            display.alert("No such user find!");
         }
     }
 
@@ -447,7 +435,7 @@ class BankSystem implements Serializable {
             int number1 = enterUserNumber (txt1, stg);
             user1 = find.findByNumber(number1);         
         } catch (NoUserFindException e) {
-            alert("No such user find.");
+            display.alert("No such user find.");
             stg.close();
             return;
         }
@@ -456,7 +444,7 @@ class BankSystem implements Serializable {
             int number2 = enterUserNumber (txt2, stg);
             user2 = find.findByNumber(number2);
         } catch (NoUserFindException e) {
-            alert("No such user find.");
+            display.alert("No such user find.");
             stg.close();
             return;
         }
@@ -469,7 +457,7 @@ class BankSystem implements Serializable {
                 }
             } 
         } catch (NoResourcesException e) {
-            alert("No resources to do this!");
+            display.alert("No resources to do this!");
         }
     }
 
@@ -514,7 +502,7 @@ class BankSystem implements Serializable {
                 it.next().display();
             }
         } catch (NoUserFindException e) {
-            alert("No such user!");
+            display.alert("No such user!");
             return;
         }
     }

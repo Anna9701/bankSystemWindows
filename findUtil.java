@@ -8,15 +8,13 @@ package bank;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.ArrayList;
-import javafx.scene.control.Alert;
 
-/**
- *
- * @author po2-110
- */
+
+
 public class findUtil {
     private transient Scanner in = new Scanner (System.in);
     private ArrayList<User> users;
+    private displayUtil display = new displayUtil();
     
     findUtil(Scanner in, ArrayList<User> users) {
        this.in = in;
@@ -72,7 +70,7 @@ public class findUtil {
 				usersfinded = findByAdress();
 				break;
 			default:
-				alert("Something went wrong!");
+				display.alert("Something went wrong!");
 				break;
 			}
 		} catch (NoUserFindException e){
@@ -239,10 +237,5 @@ public class findUtil {
 		throw new NoUserFindException();
 	}
     /************************************************/
-        void alert(String text) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(text);
-            alert.showAndWait();
-        }
+
 }
