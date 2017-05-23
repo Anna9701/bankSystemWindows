@@ -5,6 +5,8 @@
  */
 package bank;
 
+
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Vector;
 import javafx.application.Application;
@@ -31,6 +33,7 @@ import javafx.stage.WindowEvent;
  */
 public class Bank extends Application {
     BankSystem bankSystem;
+    displayUtil display = new displayUtil();
 
     @Override
     public void start(Stage primaryStage) {
@@ -57,13 +60,15 @@ public class Bank extends Application {
         root.setVgap(10);
         root.setHgap(10);
         root.setPadding(new Insets(15, 10, 0, 5));
+       
+        
         
         Button btn1 = new Button("Load");
         Button btn2 = new Button("Create");
         Label lbl1 = new Label("Name of database");
         TextField field1 = new TextField();
         
-        MyButtonHandler mbh = new MyButtonHandler(field1, stage);
+        MyButtonHandler mbh = new MyButtonHandler(field1, stage, this);
         
         lbl1.setMnemonicParsing(true);
         lbl1.setMnemonicParsing(true);
@@ -87,25 +92,19 @@ public class Bank extends Application {
         
         
     }
-    private void menu (Stage root) {
+    
+    
+    
+    void menu (Stage root) {
         root.hide();
         
         GridPane mainWindow = new GridPane();
         mainWindow.setVgap(10);
         mainWindow.setHgap(10);
         mainWindow.setPadding(new Insets(15, 15, 15, 15));
-        MenuButtonHandler mbh = new MenuButtonHandler();
+        MenuButtonHandler mbh = new MenuButtonHandler(this);
 
         
-        Button btn1 = new Button("Add User");
-        Button btn2 = new Button("Delete User");
-        Button btn3 = new Button("Pay in account");
-        Button btn4 = new Button("Pay out from account");
-        Button btn5 = new Button("Transofrm money between accounts");
-        Button btn6 = new Button("Display information about all accounts");
-        Button btn7 = new Button("Display information about specific accounts");
-        Button btn8 = new Button("Save State");
-        Button buttons[] = {btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8};
         Label lb = new Label("Welcome in our Bank System!");
         lb.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         lb.setPadding(new Insets(15, 15, 15, 15));
@@ -113,6 +112,8 @@ public class Bank extends Application {
         
         int start = 3;
         int id = 1;
+        
+        ArrayList<Button> buttons = display.createMenuButtons();
         for (Button button : buttons) {
             mainWindow.add(button, 1, start++);
             button.setId(Integer.toString(id++));
@@ -126,37 +127,7 @@ public class Bank extends Application {
         root.show();
     }
     
-    private class MenuButtonHandler implements EventHandler<ActionEvent> {
-         @Override public void handle(ActionEvent e) {
-                Button btn = (Button) e.getSource();
-                int id = Integer.parseInt(btn.getId());
-                bankSystem.menu(id);
-        }
-    }
-        
-    
-    private class MyButtonHandler implements EventHandler<ActionEvent> {
-        TextField name;
-        Stage root;
-        
-        
-        MyButtonHandler(TextField field, Stage stg){
-            name = field;
-            root = stg;
-        }
-         @Override
-        public void handle(ActionEvent event) {
-            Button btn = (Button) event.getSource();
-            String value = btn.getText();
-            String text = name.toString();
-            if(value.equals("Create")) {
-                bankSystem = new BankSystem(text, 0);
-            } else {
-                bankSystem = new BankSystem(text, 1);
-            }
-            menu(root);
-        }
-    }
+   
     /**
      * @param args the command line arguments
      */
