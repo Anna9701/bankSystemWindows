@@ -48,6 +48,25 @@ public class displayUtil {
         return buttons;
     }
     
+    ArrayList<Button> createFindButtons() {
+        Button btn1 = new Button("Users number in system");
+        Button btn2 = new Button("First Name");
+        Button btn3 = new Button("Last name");
+        Button btn4 = new Button("PESEL");
+        Button btn5 = new Button("Adress");
+        Button btn6 = new Button("Back");
+        
+        ArrayList<Button> buttons = new ArrayList<>();
+        buttons.add(btn1);
+        buttons.add(btn2);
+        buttons.add(btn3);
+        buttons.add(btn4);
+        buttons.add(btn5);
+        buttons.add(btn6);
+        
+        return buttons;
+    }
+    
     void alert(String text) {
        Alert alert = new Alert(Alert.AlertType.ERROR);
        alert.setTitle("Error");

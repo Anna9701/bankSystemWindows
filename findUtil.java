@@ -8,6 +8,10 @@ package bank;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.ArrayList;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 
 
@@ -21,31 +25,34 @@ public class findUtil {
        this.users = users;
     }
     
-    void findDisplay () {
-        System.out.println("Do you want search by: ");
-        System.out.println("1. Users number in system");
-        System.out.println("2. Name");
-        System.out.println("3. Last name");
-        System.out.println("4. PESEL");
-        System.out.println("5. Adress");
-        System.out.println("0. Exit");
+    int findDisplay () {
+        ArrayList<Button> buttons = display.createFindButtons();
+        GridPane mainWindow = display.createGridPane();
+        int id = 0, start = 3;
+        Stage stage = display.createStage("Find");
+        FindButtonHandler fbh = new FindButtonHandler(stage);
+        
+        for (Button button : buttons) {
+            mainWindow.add(button, 1, start++);
+            button.setId(Integer.toString(id++));
+            button.setMinWidth(400);
+            button.setOnAction(fbh);
+        
+        }
+        Scene scene = new Scene(mainWindow);
+        stage.setScene(scene);
+        stage.showAndWait();
+        stage.show();
+        return fbh.choise;
     }
 
-    int chooseFind () {
-        int choise;
-        do {
-            findDisplay();
-            choise = in.nextInt();
-        } while (choise < 0 || choise > 5);
-
-        return choise;
-    }
+   
 
     ArrayList<User> find () throws NoUserFindException {
-        int choise = chooseFind();
+        int choise = findDisplay();
         ArrayList<User> usersfinded = new ArrayList<User> ();
         User user = null;
-        in.nextLine();
+  
 
         try {
             switch (choise) {

@@ -232,10 +232,11 @@ class BankSystem implements Serializable {
     void displaySpecific() {
         try {
             ArrayList<User> tmp = find.find();
-            Iterator<User> it = tmp.iterator();
+            display.displayTable(tmp);
+           /* Iterator<User> it = tmp.iterator();
             while(it.hasNext()) {
                 it.next().display();
-            }
+            }*/
         } catch (NoUserFindException e) {
             display.alert("No such user!");
             return;

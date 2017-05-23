@@ -31,7 +31,21 @@ class MenuButtonHandler implements EventHandler<ActionEvent> {
         bank.bankSystem.menu(id);
     }
 }
-        
+
+class FindButtonHandler implements EventHandler<ActionEvent> {
+    int choise;
+    Stage stg;
+    FindButtonHandler(Stage stage) {
+        stg = stage;
+    }
+    
+    @Override public void handle(ActionEvent e) {
+        Button btn = (Button) e.getSource();
+        int id = Integer.parseInt(btn.getId());
+        choise = id;
+        stg.hide();
+    }
+}
     
 class MyButtonHandler implements EventHandler<ActionEvent> {
     TextField name;
