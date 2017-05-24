@@ -71,7 +71,7 @@ class BankSystem implements Serializable {
     void deleteUser() {
         Stage stg = display.createStage("Delete User");
         try {
-            int todelete = enterUserNumber("delete", stg);
+            int todelete = display.enterUserNumber("delete", stg);
             User tmp = find.findByNumber(todelete);
             if(confirm("delete", tmp)) {
                     deleteUser(tmp);
@@ -204,30 +204,7 @@ class BankSystem implements Serializable {
         }
     }
 
-    int enterUserNumber (String text, Stage stg) {
-
-        GridPane mainWindow = display.createGridPane();
-
-        Label lb = new Label("Enter system number of user to " + text);
-        TextField tf = new TextField();
-        mainWindow.add(lb, 1, 1);
-        mainWindow.add(tf, 2, 1);
-        Button btn1 = new Button("Enter");
-        Button btn2 = new Button("Cancel");
-        mainWindow.add(btn1, 1, 2);
-        mainWindow.add(btn2, 2, 2);
-        btn2.setOnAction(new cancelButton(stg));
-
-        enterUserNumberButton handler = new enterUserNumberButton(tf, stg);
-        btn1.setOnAction(handler);
-
-        Scene scene = new Scene(mainWindow);
-        stg.setScene(scene);
-        stg.showAndWait();
-
-
-       return handler.number;
-    }
+    
     
     void displaySpecific() {
         try {

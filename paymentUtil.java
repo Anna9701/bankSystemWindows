@@ -36,7 +36,7 @@ public class paymentUtil {
         Stage stg = display.createStage("Payment");	
         User topay;
             try {   
-                int number = bank.enterUserNumber("payment", stg);
+                int number = display.enterUserNumber("payment", stg);
                 topay = find.findByNumber(number);
                 if(bank.confirm("payment", topay)) {
                     try {
@@ -54,7 +54,7 @@ public class paymentUtil {
         User totake;
         Stage stg = display.createStage("Payment");
         try {
-            int number = bank.enterUserNumber("pay out", stg);
+            int number = display.enterUserNumber("pay out", stg);
             totake = find.findByNumber(number);
             if(bank.confirm("payout", totake)) {
                 try {
@@ -135,7 +135,7 @@ public class paymentUtil {
         Stage stg = display.createStage("transform");
 
         try {
-            int number1 = bank.enterUserNumber (txt1, stg);
+            int number1 = display.enterUserNumber (txt1, stg);
             user1 = find.findByNumber(number1);         
         } catch (NoUserFindException e) {
             display.alert("No such user find.");
@@ -144,7 +144,7 @@ public class paymentUtil {
         }
 
         try {
-            int number2 = bank.enterUserNumber (txt2, stg);
+            int number2 = display.enterUserNumber (txt2, stg);
             user2 = find.findByNumber(number2);
         } catch (NoUserFindException e) {
             display.alert("No such user find.");

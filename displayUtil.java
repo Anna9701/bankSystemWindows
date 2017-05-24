@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -24,6 +25,7 @@ import javafx.stage.Stage;
  * @author esperanza
  */
 public class displayUtil {
+    private static final displayUtil display = new displayUtil();
     
     ArrayList<Button> createMenuButtons() {
         Button btn1 = new Button("Add User");
@@ -109,6 +111,30 @@ public class displayUtil {
         stg.setScene(new Scene(root, 500, 250));
         stg.show();
     }
+    
+    int enterUserNumber (String text, Stage stg) {
 
+        GridPane mainWindow = display.createGridPane();
+
+        Label lb = new Label("Enter system number of user to " + text);
+        TextField tf = new TextField();
+        mainWindow.add(lb, 1, 1);
+        mainWindow.add(tf, 2, 1);
+        Button btn1 = new Button("Enter");
+        Button btn2 = new Button("Cancel");
+        mainWindow.add(btn1, 1, 2);
+        mainWindow.add(btn2, 2, 2);
+        btn2.setOnAction(new cancelButton(stg));
+
+        enterUserNumberButton handler = new enterUserNumberButton(tf, stg);
+        btn1.setOnAction(handler);
+
+        Scene scene = new Scene(mainWindow);
+        stg.setScene(scene);
+        stg.showAndWait();
+
+
+       return handler.number;
+    }
     
 }

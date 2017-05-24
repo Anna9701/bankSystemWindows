@@ -28,7 +28,7 @@ public class findUtil {
     int findDisplay () {
         ArrayList<Button> buttons = display.createFindButtons();
         GridPane mainWindow = display.createGridPane();
-        int id = 0, start = 3;
+        int id = 1, start = 3;
         Stage stage = display.createStage("Find");
         FindButtonHandler fbh = new FindButtonHandler(stage);
         
@@ -42,7 +42,7 @@ public class findUtil {
         Scene scene = new Scene(mainWindow);
         stage.setScene(scene);
         stage.showAndWait();
-        stage.show();
+       // stage.show();
         return fbh.choise;
     }
 
@@ -85,15 +85,17 @@ public class findUtil {
 
         return usersfinded;
     }
-        
+    
+    
+    
     User findByNumber() throws NoUserFindException {
         User user;
-
-
-        System.out.println("Enter system number of user: ");
-        int numbertofind = in.nextInt();
-
-        try {
+        Stage stg = display.createStage("Find by number");
+        //GridPane mainWindow = display.createGridPane();
+        
+        int numbertofind = display.enterUserNumber("to find", stg);
+        
+       try {
             user = findByNumber(numbertofind);
         } catch (NoUserFindException e) {
             throw e;
