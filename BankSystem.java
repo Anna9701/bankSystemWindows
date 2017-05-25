@@ -70,8 +70,9 @@ class BankSystem implements Serializable {
 
     void deleteUser() {
         Stage stg = display.createStage("Delete User");
+        String text2 = "delete";
         try {
-            int todelete = display.enterUserNumber("delete", stg);
+            int todelete = display.enterUserNumber(text2, stg);
             User tmp = find.findByNumber(todelete);
             if(confirm("delete", tmp)) {
                     deleteUser(tmp);

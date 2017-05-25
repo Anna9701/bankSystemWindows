@@ -1,5 +1,7 @@
 package bank;
 
+import java.util.Formatter;
+
 class NoUserFindException extends Exception {}
 
 class User implements java.io.Serializable {
@@ -26,8 +28,52 @@ class User implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return systemNumber + "\t" + firstname + "\t" + lastname + "\t" + pesel + "\t" + adress + "\t" + account.getResources();
+        Formatter format1 = new Formatter();
+        format1.format("%-15d%-20s%-20s%-15d%-20s%-20.2f", systemNumber, firstname, lastname, pesel, adress, account.getResources());
+        String text = format1.toString();
+        System.out.println(text);
+        
+        return text;
     }
+    
+    String toText(int systemNumber, String fname) {
+        String text = String.valueOf(systemNumber);
+        int size = 20 - text.length();
+        for(int i = 0; i < size ; i++) {
+            text += " ";
+        }
+        size = 20 - fname.length();
+        text += fname;
+        for(int i = 0; i < size ; i++) {
+            text += " ";
+        }
+        
+        return text;
+    }
+    
+    String toText(long number) {
+        String text = String.valueOf(number);
+        int size = 20 - text.length();
+        for(int i = 0; i < size ; i++) {
+            text += ' ';
+        }
+ 
+        return text;
+    }
+    
+    String toText(String tmp) {
+        int size = 20 - tmp.length();
+        for(int i = 0; i < size ; i++) {
+            tmp += ' ';
+        }
+        
+        return tmp;
+    }
+    
+    /*@Override
+    public String toString() {
+        return systemNumber + "\t" + firstname + "\t" + lastname + "\t" + pesel + "\t" + adress + "\t" + account.getResources();
+    }*/
 
     int getNumber() {
         return systemNumber;

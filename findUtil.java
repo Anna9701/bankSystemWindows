@@ -56,8 +56,6 @@ public class findUtil {
 
         try {
             switch (choise) {
-            case 0:
-                break;
             case 1:
                 user = findByNumber();
                 usersfinded.add(user);
@@ -75,6 +73,8 @@ public class findUtil {
             case 5:
                 usersfinded = findByAdress();
                 break;
+            case 6:
+                break;
             default:
                 display.alert("Something went wrong!");
                 break;
@@ -91,9 +91,10 @@ public class findUtil {
     User findByNumber() throws NoUserFindException {
         User user;
         Stage stg = display.createStage("Find by number");
+        String text1 = "system number";
         //GridPane mainWindow = display.createGridPane();
         
-        int numbertofind = display.enterUserNumber("to find", stg);
+       int numbertofind = display.enterUserNumber(text1, stg);
         
        try {
             user = findByNumber(numbertofind);
@@ -118,10 +119,10 @@ public class findUtil {
 
     ArrayList<User> findByName () throws NoUserFindException {
         ArrayList<User> usersfinded = new ArrayList<User> ();
-
-
-        System.out.println("Enter name of user: ");
-        String name = new String(in.nextLine());
+        String text1 = "name", text2 = "to find";
+        Stage stg = display.createStage("Find by name");
+       
+        String name = display.enterUserText(text1, text2, stg);
 
         try {
             usersfinded = findByName(name);
@@ -152,11 +153,10 @@ public class findUtil {
 
     ArrayList<User> findByLastName () throws NoUserFindException {
         ArrayList<User> usersfinded = new ArrayList<User> ();
-
-        String lastname;
-
-        System.out.println("Enter lastname of user: ");
-        lastname = in.nextLine();
+        String text1 = "lastname", text2 = "to find";
+        Stage stg = display.createStage("Find by lastname");
+       
+        String lastname = display.enterUserText(text1, text2, stg);
 
         try {
             usersfinded = findByLastName(lastname);
@@ -188,10 +188,10 @@ public class findUtil {
 
     ArrayList <User> findByAdress () throws NoUserFindException {
         ArrayList<User> usersfinded = new ArrayList<User> ();
-        String adress;
-
-        System.out.println("Enter adress of user: ");
-        adress = in.nextLine();
+        String text1 = "address", text2 = "to find";
+        Stage stg = display.createStage("Find by adress");
+       
+        String adress = display.enterUserText(text1, text2, stg);
 
         try {
             usersfinded = findByAdress(adress);
@@ -221,9 +221,10 @@ public class findUtil {
 
     User findByPesel() throws NoUserFindException {
         User user;
-
-        System.out.println("Enter PESEL number: ");
-        long numbertofind = in.nextLong();
+        String text1 = "find";
+        Stage stg = display.createStage("Find by PESEL");
+       
+        long numbertofind = display.enterUserLong(text1, stg);
 
         try {
             user = findByPesel(numbertofind);

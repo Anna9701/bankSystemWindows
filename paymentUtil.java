@@ -35,8 +35,9 @@ public class paymentUtil {
     void toPay() {
         Stage stg = display.createStage("Payment");	
         User topay;
+        String text2 = "payment";
             try {   
-                int number = display.enterUserNumber("payment", stg);
+                int number = display.enterUserNumber(text2, stg);
                 topay = find.findByNumber(number);
                 if(bank.confirm("payment", topay)) {
                     try {
@@ -53,8 +54,9 @@ public class paymentUtil {
     void toTake() {
         User totake;
         Stage stg = display.createStage("Payment");
+        String text2 = "pay out";
         try {
-            int number = display.enterUserNumber("pay out", stg);
+            int number = display.enterUserNumber(text2, stg);
             totake = find.findByNumber(number);
             if(bank.confirm("payout", totake)) {
                 try {

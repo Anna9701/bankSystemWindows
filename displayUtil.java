@@ -137,4 +137,54 @@ public class displayUtil {
        return handler.number;
     }
     
+     long enterUserLong (String text, Stage stg) {
+
+        GridPane mainWindow = display.createGridPane();
+
+        Label lb = new Label("Enter number of user to " + text);
+        TextField tf = new TextField();
+        mainWindow.add(lb, 1, 1);
+        mainWindow.add(tf, 2, 1);
+        Button btn1 = new Button("Enter");
+        Button btn2 = new Button("Cancel");
+        mainWindow.add(btn1, 1, 2);
+        mainWindow.add(btn2, 2, 2);
+        btn2.setOnAction(new cancelButton(stg));
+
+        enterUserLongButton handler = new enterUserLongButton(tf, stg);
+        btn1.setOnAction(handler);
+
+        Scene scene = new Scene(mainWindow);
+        stg.setScene(scene);
+        stg.showAndWait();
+
+
+       return handler.number;
+    }
+     
+    String enterUserText (String text, String text2, Stage stg) {
+
+        GridPane mainWindow = display.createGridPane();
+
+        Label lb = new Label("Enter " + text + " of user to " + text2);
+        TextField tf = new TextField();
+        mainWindow.add(lb, 1, 1);
+        mainWindow.add(tf, 2, 1);
+        Button btn1 = new Button("Enter");
+        Button btn2 = new Button("Cancel");
+        mainWindow.add(btn1, 1, 2);
+        mainWindow.add(btn2, 2, 2);
+        btn2.setOnAction(new cancelButton(stg));
+
+        enterUserTextButton handler = new enterUserTextButton(tf, stg);
+        btn1.setOnAction(handler);
+
+        Scene scene = new Scene(mainWindow);
+        stg.setScene(scene);
+        stg.showAndWait();
+
+
+       return handler.text;
+    }
+    
 }

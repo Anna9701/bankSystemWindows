@@ -100,6 +100,39 @@ class enterUserNumberButton implements EventHandler<ActionEvent> {
         }
     }
 
+class enterUserLongButton implements EventHandler<ActionEvent> {
+        TextField tf;
+        long number;
+        Stage stg;
+
+        enterUserLongButton(TextField text, Stage stag) {
+            tf = text;
+            stg = stag;
+        }
+        @Override
+        public void handle(ActionEvent e) {
+            number = Long.parseLong(tf.getText());
+            stg.hide();
+        }
+}
+
+
+class enterUserTextButton implements EventHandler<ActionEvent> {
+        TextField tf;
+        String text;
+        Stage stg;
+
+        enterUserTextButton(TextField text, Stage stag) {
+            tf = text;
+            stg = stag;
+        }
+        @Override
+        public void handle(ActionEvent e) {
+            text = tf.getText();
+            stg.hide();
+        }
+}
+
 class applyPaymentButton implements EventHandler<ActionEvent> {
    TextField textField1;
    Text lb2;
