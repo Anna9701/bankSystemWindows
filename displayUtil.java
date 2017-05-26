@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 public class displayUtil {
     private static final displayUtil display = new displayUtil();
     
-    ArrayList<Button> createMenuButtons() {
+    ArrayList<Button> createMenuButtonsForBank() {
         Button btn1 = new Button("Add User");
         Button btn2 = new Button("Delete User");
         Button btn3 = new Button("Pay in account");
@@ -51,6 +51,25 @@ public class displayUtil {
         return buttons;
     }
     
+    ArrayList<Button> createMenuButtonsForClient() {
+        ArrayList<Button> buttons = new ArrayList<>();
+        
+        Button btn1 = new Button("Pay in account");
+        Button btn2 = new Button("Pay out from account");
+        Button btn3 = new Button("Transofrm money someone");
+        Button btn4 = new Button("Display account");
+        Button btn5 = new Button("Delete Account");
+        Button btn6 = new Button("Save State"); 
+        
+        buttons.add(btn1);
+        buttons.add(btn2);
+        buttons.add(btn3);
+        buttons.add(btn4);
+        buttons.add(btn5);
+        buttons.add(btn6);
+        
+        return buttons;
+    }
     ArrayList<Button> createFindButtons() {
         Button btn1 = new Button("Users number in system");
         Button btn2 = new Button("First Name");

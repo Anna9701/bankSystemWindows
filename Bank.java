@@ -34,6 +34,7 @@ import javafx.stage.WindowEvent;
 public class Bank extends Application {
     BankSystem bankSystem;
     displayUtil display = new displayUtil();
+    static int procedure;
 
     @Override
     public void start(Stage primaryStage) {
@@ -48,15 +49,38 @@ public class Bank extends Application {
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
-                    bankSystem.saveState();//////////////////////// saaaaaaaaaaave ????
+                  //  bankSystem.saveState();//////////////////////// saaaaaaaaaaave ????
                     Platform.exit();
                 }
             }
         });
+        chooseUser();
         initUI(primaryStage);
     }
     
+    private void chooseUser() {
+        Stage stage = display.createStage("Choose User");
+        GridPane root = display.createGridPane();
+        stage.setTitle("Choose mode");
+        Button btn1 = new Button("Client");
+        btn1.setId("1");
+        chooseUserButton handler = new chooseUserButton(stage);
+        btn1.setOnAction(handler);
+        Button btn2 = new Button("Bank");
+        btn2.setId("0");
+        btn2.setOnAction(handler);
+        Label lbl1 = new Label("Choose who you are");
+        root.add(lbl1, 0, 0);
+        root.add(btn1, 2, 2);
+        root.add(btn2, 1, 2);
+        
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+    
     private void initUI(Stage stage){
+
         GridPane root = new GridPane();
         root.setVgap(10);
         root.setHgap(10);
@@ -98,7 +122,7 @@ public class Bank extends Application {
     
     void menu (Stage root) {
         root.hide();
-        
+        ArrayList<Button> buttons = new ArrayList<>();
         GridPane mainWindow = new GridPane();
         mainWindow.setVgap(10);
         mainWindow.setHgap(10);
@@ -114,7 +138,11 @@ public class Bank extends Application {
         int start = 3;
         int id = 1;
         
-        ArrayList<Button> buttons = display.createMenuButtons();
+        if(procedure == 0) {
+            buttons = display.createMenuButtonsForBank();
+        } else {
+            buttons = display.createMenuButtonsForClient();
+        }
         for (Button button : buttons) {
             mainWindow.add(button, 1, start++);
             button.setId(Integer.toString(id++));

@@ -34,8 +34,9 @@ class BankSystem implements Serializable {
     static findUtil find;
     private static displayUtil display = new displayUtil();
     private static paymentUtil payments;
+    private static int procedure;
     
-    BankSystem(String file, int mode) {
+    BankSystem(String file, int mode, int md) {
         if(mode == 1) {
             try{
                 FileInputStream fis = new FileInputStream(file);
@@ -54,6 +55,7 @@ class BankSystem implements Serializable {
         }
         find = new findUtil(in, users);
         payments = new paymentUtil(this);
+        BankSystem.procedure = md;
     }
 
     void saveState() {
@@ -81,8 +83,8 @@ class BankSystem implements Serializable {
             display.alert("No such user found");
         }  
     }
-
-    void menu(int choise){
+    
+    void menuForBank(int choise) {
         switch(choise) {
         case 1:
                 addUser();
@@ -112,6 +114,18 @@ class BankSystem implements Serializable {
         }
     }
     
+    void menu(int choise){
+        if(procedure == 0) {
+           menuForBank(choise);
+        } else {
+           menuForClient(choise);
+        }
+        
+    }
+    
+    void menuForClient(int choise) {
+        
+    }
   
     
     boolean confirm (String text) {

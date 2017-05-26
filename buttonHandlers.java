@@ -51,12 +51,14 @@ class MyButtonHandler implements EventHandler<ActionEvent> {
     TextField name;
     Stage root;
     Bank bank;
+    int mode;
 
 
     MyButtonHandler(TextField field, Stage stg, Bank bk){
         name = field;
         root = stg;
         bank = bk;
+        mode = Bank.procedure;
     }
      @Override
     public void handle(ActionEvent event) {
@@ -64,9 +66,9 @@ class MyButtonHandler implements EventHandler<ActionEvent> {
         String value = btn.getText();
         String text = name.toString();
         if(value.equals("Create")) {
-            bank.bankSystem = new BankSystem(text, 0);
+            bank.bankSystem = new BankSystem(text, 0, mode);
         } else {
-            bank.bankSystem = new BankSystem(text, 1);
+            bank.bankSystem = new BankSystem(text, 1, mode);
         }
         bank.menu(root);
     }
@@ -214,4 +216,19 @@ class applyTransferButton implements EventHandler<ActionEvent> {
         }
 
     } 
+}
+
+class chooseUserButton implements EventHandler<ActionEvent> {
+    Stage stage;
+    
+    chooseUserButton(Stage stg) {
+        stage = stg;
+    }
+    
+    @Override
+    public void handle(ActionEvent e) {
+        Button b = (Button) e.getSource();
+        Bank.procedure = Integer.parseInt(b.getId());
+        stage.close();
+    }
 }
