@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -93,7 +94,7 @@ public class displayUtil {
     
     void displayTable(ArrayList<User> users) {
         Stage stg = createStage("Bank Accounts");
-        Label lb1 = new Label("Number");
+        Label lb1 = new Label("Bank Accounts");
         GridPane window = createGridPane();
 
         final ObservableList data = FXCollections.observableArrayList();
@@ -110,6 +111,27 @@ public class displayUtil {
         window.add(lb1, 1, 1);
         stg.setScene(new Scene(root, 500, 250));
         stg.show();
+    }
+    
+    
+    void displayUsers(ArrayList<User> users) {
+        Stage stg = createStage("Bank Accounts");
+        
+        GridPane window = createGridPane();
+        
+        ArrayList<Text> text = new ArrayList<>();
+        int start = 2;
+        for(User user : users) {
+            Text tmp = new Text();
+            tmp.setText(user.toString());
+            text.add(tmp);
+            window.add(tmp, 1, start++);
+        }
+        
+        Scene scene = new Scene(window);
+        stg.setScene(scene);
+        stg.show();
+        
     }
     
     int enterUserNumber (String text, Stage stg) {

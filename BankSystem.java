@@ -101,6 +101,7 @@ class BankSystem implements Serializable {
                 break;
         case 6:
                 display.displayTable(users);
+                //display.displayUsers(users);
                 break;
         case 7:
                 displaySpecific();

@@ -48,6 +48,7 @@ public class Bank extends Application {
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
+                    bankSystem.saveState();//////////////////////// saaaaaaaaaaave ????
                     Platform.exit();
                 }
             }
