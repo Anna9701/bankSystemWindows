@@ -162,10 +162,10 @@ class BankSystem implements Serializable {
         case 2:
                 display.displayUser(user);
                 break;
-        case 4:
+        case 3:
                 deleteUserForClient(user);
                 break;
-        case 5:
+        case 4:
                 saveState();
                 break;
         }

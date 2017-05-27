@@ -19,6 +19,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -59,15 +61,15 @@ public class displayUtil {
        // Button btn2 = new Button("Pay out from account");
         Button btn1 = new Button("Transfer money");
         Button btn2 = new Button("Display account");
-        Button btn3 = new Button("Edit account");
-        Button btn4 = new Button("Delete Account");
-        Button btn5 = new Button("Save State"); 
+        //Button btn3 = new Button("Edit account");
+        Button btn3 = new Button("Delete Account");
+        Button btn4 = new Button("Save State"); 
         
         buttons.add(btn1);
         buttons.add(btn2);
         buttons.add(btn3);
         buttons.add(btn4);
-        buttons.add(btn5);
+      //  buttons.add(btn5);
      //   buttons.add(btn6);
         
         return buttons;
@@ -153,11 +155,24 @@ public class displayUtil {
         
         GridPane window = createGridPane();
         
-      
+        Text txt = new Text();
+        Formatter format1 = new Formatter();
+        format1.format("%-12s%-15s%-15s%-15s%-15s%-15s", "SystemNo", "Firstname", "Lastname", "PESEL", "Address", "Resources");
+        String text = format1.toString();
+        txt.setText(text);
+        txt.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
  
         Text tmp = new Text();
         tmp.setText(user.toString());
-        window.add(tmp, 1, 1);
+        
+        Button btn = new Button ("Close");
+        btn.setOnAction(new cancelButton(stg));
+        btn.setTranslateX(150);
+        btn.setMinWidth(400);
+        
+        window.add(txt, 1, 0);
+        window.add(tmp, 1, 2);
+        window.add(btn, 1, 3);
 
         Scene scene = new Scene(window);
         stg.setScene(scene);
