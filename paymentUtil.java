@@ -165,7 +165,21 @@ public class paymentUtil {
             display.alert("No resources to do this!");
         }
     }
-     
+    
+    void transferForClient (User user, User target, Stage stg) { 
+        String txt1 = "transfer money to";
+        try {
+            if(bank.confirm(txt1, target)) {
+                double money = payOutTransfer(user, stg);
+                if(money > 0) {
+                    payIn(target, money);
+                }
+            } 
+        } catch (NoResourcesException e) {
+            display.alert("No resources to do this!");
+        }
+    }
+    
     private void payIn(User topay, double money) {
         topay.account.payment(money);
     }

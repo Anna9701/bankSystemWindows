@@ -55,19 +55,20 @@ public class displayUtil {
     ArrayList<Button> createMenuButtonsForClient() {
         ArrayList<Button> buttons = new ArrayList<>();
         
-        Button btn1 = new Button("Pay in account");
-        Button btn2 = new Button("Pay out from account");
-        Button btn3 = new Button("Transfer money");
-        Button btn4 = new Button("Display account");
-        Button btn5 = new Button("Delete Account");
-        Button btn6 = new Button("Save State"); 
+      //  Button btn1 = new Button("Pay in account");
+       // Button btn2 = new Button("Pay out from account");
+        Button btn1 = new Button("Transfer money");
+        Button btn2 = new Button("Display account");
+        Button btn3 = new Button("Edit account");
+        Button btn4 = new Button("Delete Account");
+        Button btn5 = new Button("Save State"); 
         
         buttons.add(btn1);
         buttons.add(btn2);
         buttons.add(btn3);
         buttons.add(btn4);
         buttons.add(btn5);
-        buttons.add(btn6);
+     //   buttons.add(btn6);
         
         return buttons;
     }

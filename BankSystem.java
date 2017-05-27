@@ -116,21 +116,56 @@ class BankSystem implements Serializable {
         }
     }
     
-  
+    /*void payOutForClient(User user) {
+        Stage stg = display.createStage("Pay out");
+        try {
+            payments.payOutTransfer(user, stg);
+        } catch (NoResourcesException ex) {
+            display.alert("There is no resources to do this!");
+        }
+    }
+    
+    void payInForClient(User user) {
+       Stage stg = display.createStage("Pay in");
+        try {
+            payments.payment(user, stg, 1);
+        } catch (NoResourcesException ex) {} // konieczne przez handler obslugujacy in i out
+ 
+    }*/
+    
+    void transferForClient(User user) {
+        Stage stg = display.createStage("Transfer");
+        int number = display.enterUserNumber("transfer money", stg);
+        User target;
+        try {
+            target = find.findByNumber(number);
+        } catch (NoUserFindException ex) {
+            display.alert("No such user found!");
+            return;
+        }    
+        
+        payments.transferForClient(user, target, stg);
+          
+    }
     
     void menuForClient(int choise, User user) {
-            switch(choise) {
-
-        case 3:
-      //          payments.toPay();
+        switch(choise) {
+       /* case 1:
+                payInForClient(user);
                 break;
-        case 4:
+        case 2:
+                payOutForClient(user);
+                break;*/
+        case 1:
+                transferForClient(user);
+                break;
+        case 2:
                 display.displayUser(user);
                 break;
-        case 5:
+        case 4:
                 deleteUserForClient(user);
                 break;
-        case 6:
+        case 5:
                 saveState();
                 break;
         }
@@ -139,9 +174,9 @@ class BankSystem implements Serializable {
     void deleteUserForClient(User user) {
         if(confirm("delete", user)) {
             users.remove(user);
+            saveState();
+            Platform.exit();
         }
-        saveState();
-        Platform.exit();
     }
     
     boolean confirm (String text) {
