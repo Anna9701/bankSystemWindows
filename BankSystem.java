@@ -10,6 +10,8 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -114,17 +116,10 @@ class BankSystem implements Serializable {
         }
     }
     
-    void menu(int choise){
-        if(procedure == 0) {
-           menuForBank(choise);
-        } else {
-           menuForClient(choise);
-        }
-        
-    }
+  
     
-    void menuForClient(int choise) {
-        
+    void menuForClient(int choise, User user) {
+    
     }
   
     
@@ -235,4 +230,6 @@ class BankSystem implements Serializable {
             return;
         }
     }
+
+  
 }

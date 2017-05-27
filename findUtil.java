@@ -91,7 +91,7 @@ public class findUtil {
     User findByNumber() throws NoUserFindException {
         User user;
         Stage stg = display.createStage("Find by number");
-        String text1 = "system number";
+        String text1 = "find";
         //GridPane mainWindow = display.createGridPane();
         
        int numbertofind = display.enterUserNumber(text1, stg);

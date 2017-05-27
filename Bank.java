@@ -127,7 +127,9 @@ public class Bank extends Application {
         mainWindow.setVgap(10);
         mainWindow.setHgap(10);
         mainWindow.setPadding(new Insets(15, 15, 15, 15));
-        MenuButtonHandler mbh = new MenuButtonHandler(this);
+        User usr = null;
+        MenuButtonHandler mbh = new MenuButtonHandler(this, usr);
+     
 
         
         Label lb = new Label("Welcome in our Bank System!");
@@ -141,6 +143,14 @@ public class Bank extends Application {
         if(procedure == 0) {
             buttons = display.createMenuButtonsForBank();
         } else {
+            try {
+                Stage stg = display.createStage("Client");
+                int number = display.enterUserNumber("start", stg);
+                usr = BankSystem.find.findByNumber(number);
+            } catch (NoUserFindException ex) {
+                new displayUtil().alert("No such user found!");
+                Platform.exit();
+            }
             buttons = display.createMenuButtonsForClient();
         }
         for (Button button : buttons) {

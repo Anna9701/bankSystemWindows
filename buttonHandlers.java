@@ -5,6 +5,8 @@
  */
 package bank;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -20,15 +22,25 @@ import javafx.stage.Stage;
 
 class MenuButtonHandler implements EventHandler<ActionEvent> {
     Bank bank;
-
+    User user;
+    
     MenuButtonHandler(Bank bk) {
         bank = bk;
+    }
+
+    MenuButtonHandler(Bank aThis, User usr) {
+       bank = aThis;
+       user = usr;
     }
 
     @Override public void handle(ActionEvent e) {
         Button btn = (Button) e.getSource();
         int id = Integer.parseInt(btn.getId());
-        bank.bankSystem.menu(id);
+        if(bank.procedure == 0) {
+            bank.bankSystem.menuForBank(id);
+        } else {
+            bank.bankSystem.menuForClient(id, user);
+        }
     }
 }
 
@@ -220,7 +232,7 @@ class applyTransferButton implements EventHandler<ActionEvent> {
 
 class chooseUserButton implements EventHandler<ActionEvent> {
     Stage stage;
-    
+ 
     chooseUserButton(Stage stg) {
         stage = stg;
     }
