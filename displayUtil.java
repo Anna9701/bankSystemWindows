@@ -6,6 +6,7 @@
 package bank;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -113,9 +114,14 @@ public class displayUtil {
     
     void displayTable(ArrayList<User> users) {
         Stage stg = createStage("Bank Accounts");
-        Label lb1 = new Label("Bank Accounts");
         GridPane window = createGridPane();
 
+        Text txt = new Text();
+        Formatter format1 = new Formatter();
+        format1.format("%-15s%-20s%-20s%-15s%-20s%-20s", "SystemNo", "Firstname", "Lastname", "PESEL", "Address", "Resources");
+        String text = format1.toString();
+        txt.setText(text);
+          
         final ObservableList data = FXCollections.observableArrayList();
         data.addAll(users);
         final ListView listView = new ListView(data);
@@ -124,11 +130,19 @@ public class displayUtil {
         listView.autosize();
         listView.setItems(data);
         listView.setCellFactory(ComboBoxListCell.forListView(data));   
+        
+        Button btn = new Button ("Close");
+        btn.setOnAction(new cancelButton(stg));
+        btn.setTranslateX(250);
+        
         StackPane root = new StackPane();
-        root.getChildren().add(lb1);
         root.getChildren().add(listView);
-        window.add(lb1, 1, 1);
-        stg.setScene(new Scene(root, 500, 250));
+
+        window.add(txt, 0, 1);
+        window.add(root, 0, 2);
+        window.add(btn, 0, 3);
+
+        stg.setScene(new Scene(window, 700, 300));
         stg.show();
     }
     

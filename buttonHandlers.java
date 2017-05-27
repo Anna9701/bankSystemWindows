@@ -5,17 +5,22 @@
  */
 package bank;
 
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -242,4 +247,33 @@ class applyTransferButton implements EventHandler<ActionEvent> {
 
     } 
 }
+
+class exitButton implements EventHandler<WindowEvent> {
+    Stage stage;
+    boolean saveFlag;
+    BankSystem bankSystem;
+    
+    exitButton(Stage stg, BankSystem bank, boolean flag) {
+        stage = stg;
+        bankSystem = bank;
+        saveFlag = flag;
+    }
+        @Override
+        public void handle(WindowEvent event) {
+            event.consume();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Close Confirmation");
+            alert.setHeaderText("Do you really want to quit?");
+            alert.initOwner(stage);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                if(saveFlag) {
+                  bankSystem.saveState();//////////////////////// saaaaaaaaaaave ????
+                }
+                Platform.exit();
+            }
+     }
+}
+        
 

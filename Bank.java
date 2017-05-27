@@ -41,7 +41,8 @@ public class Bank extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        primaryStage.setOnCloseRequest(new exitButton(primaryStage, bankSystem, false));
+       /* primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
                 event.consume();
@@ -56,7 +57,7 @@ public class Bank extends Application {
                     Platform.exit();
                 }
             }
-        });
+        });*/
  
         initUI(primaryStage);
     }
@@ -116,6 +117,7 @@ public class Bank extends Application {
     
     void menu (Stage root) {
         root.hide();
+        root.setOnCloseRequest(new exitButton(root, bankSystem, true));
         ArrayList<Button> buttons = new ArrayList<>();
         GridPane mainWindow = new GridPane();
         mainWindow.setVgap(10);
