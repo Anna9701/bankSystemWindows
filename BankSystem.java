@@ -119,9 +119,30 @@ class BankSystem implements Serializable {
   
     
     void menuForClient(int choise, User user) {
-    
+            switch(choise) {
+
+        case 3:
+      //          payments.toPay();
+                break;
+        case 4:
+                display.displayUser(user);
+                break;
+        case 5:
+                deleteUserForClient(user);
+                break;
+        case 6:
+                saveState();
+                break;
+        }
     }
-  
+    
+    void deleteUserForClient(User user) {
+        if(confirm("delete", user)) {
+            users.remove(user);
+        }
+        saveState();
+        Platform.exit();
+    }
     
     boolean confirm (String text) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

@@ -56,7 +56,7 @@ public class displayUtil {
         
         Button btn1 = new Button("Pay in account");
         Button btn2 = new Button("Pay out from account");
-        Button btn3 = new Button("Transofrm money someone");
+        Button btn3 = new Button("Transfer money");
         Button btn4 = new Button("Display account");
         Button btn5 = new Button("Delete Account");
         Button btn6 = new Button("Save State"); 
@@ -133,20 +133,17 @@ public class displayUtil {
     }
     
     
-    void displayUsers(ArrayList<User> users) {
-        Stage stg = createStage("Bank Accounts");
+    void displayUser(User user) {
+        Stage stg = createStage("Bank Account");
         
         GridPane window = createGridPane();
         
-        ArrayList<Text> text = new ArrayList<>();
-        int start = 2;
-        for(User user : users) {
-            Text tmp = new Text();
-            tmp.setText(user.toString());
-            text.add(tmp);
-            window.add(tmp, 1, start++);
-        }
-        
+      
+ 
+        Text tmp = new Text();
+        tmp.setText(user.toString());
+        window.add(tmp, 1, 1);
+
         Scene scene = new Scene(window);
         stg.setScene(scene);
         stg.show();

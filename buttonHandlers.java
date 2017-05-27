@@ -12,6 +12,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -36,9 +38,12 @@ class MenuButtonHandler implements EventHandler<ActionEvent> {
     @Override public void handle(ActionEvent e) {
         Button btn = (Button) e.getSource();
         int id = Integer.parseInt(btn.getId());
-        if(bank.procedure == 0) {
+        System.out.println(Bank.procedure);
+        System.out.println(id);
+        if(Bank.procedure == 0) {
             bank.bankSystem.menuForBank(id);
         } else {
+            System.out.println(user);
             bank.bankSystem.menuForClient(id, user);
         }
     }
@@ -64,19 +69,27 @@ class MyButtonHandler implements EventHandler<ActionEvent> {
     Stage root;
     Bank bank;
     int mode;
+    ToggleGroup toggleGroup;
 
-
-    MyButtonHandler(TextField field, Stage stg, Bank bk){
+    MyButtonHandler(TextField field, Stage stg, Bank bk, ToggleGroup selected){
         name = field;
         root = stg;
         bank = bk;
         mode = Bank.procedure;
+        toggleGroup = selected;
     }
      @Override
     public void handle(ActionEvent event) {
+        ToggleButton selectedToggleButton = (ToggleButton) toggleGroup.getSelectedToggle();
+        if(selectedToggleButton.getUserData().equals("Bank")) {
+            Bank.procedure = 0;
+        } else {
+            Bank.procedure = 1;
+        }
+
         Button btn = (Button) event.getSource();
         String value = btn.getText();
-        String text = name.toString();
+        String text = name.getText();
         if(value.equals("Create")) {
             bank.bankSystem = new BankSystem(text, 0, mode);
         } else {
@@ -218,7 +231,7 @@ class applyTransferButton implements EventHandler<ActionEvent> {
         } else {
             if(bank.confirm("amount " + Double.toString(amount))) {
                 try {
-                    toPayOut.account.payout(amount);
+                    toPayOut.account.payout(amount);    
                     stg.hide();
                 } catch (NoResourcesException ee) {
                     lb2.setText("There is no resources!");
@@ -230,17 +243,3 @@ class applyTransferButton implements EventHandler<ActionEvent> {
     } 
 }
 
-class chooseUserButton implements EventHandler<ActionEvent> {
-    Stage stage;
- 
-    chooseUserButton(Stage stg) {
-        stage = stg;
-    }
-    
-    @Override
-    public void handle(ActionEvent e) {
-        Button b = (Button) e.getSource();
-        Bank.procedure = Integer.parseInt(b.getId());
-        stage.close();
-    }
-}
