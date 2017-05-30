@@ -6,12 +6,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,12 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 class BankSystem implements Serializable {
@@ -70,10 +62,12 @@ class BankSystem implements Serializable {
         } catch (IOException e) {
                 display.alert("Exception while save bank state");
         }
+
     }
 
-    void deleteUser() {
+     void deleteUser() {
         Stage stg = display.createStage("Delete User");
+        stg.setOnCloseRequest(new exitButton(stg, this, true));
         String text2 = "delete";
         try {
             int todelete = display.enterUserNumber(text2, stg);
@@ -86,6 +80,7 @@ class BankSystem implements Serializable {
         }  
     }
     
+     
     void menuForBank(int choise) {
         switch(choise) {
         case 1:
@@ -116,25 +111,10 @@ class BankSystem implements Serializable {
         }
     }
     
-    /*void payOutForClient(User user) {
-        Stage stg = display.createStage("Pay out");
-        try {
-            payments.payOutTransfer(user, stg);
-        } catch (NoResourcesException ex) {
-            display.alert("There is no resources to do this!");
-        }
-    }
-    
-    void payInForClient(User user) {
-       Stage stg = display.createStage("Pay in");
-        try {
-            payments.payment(user, stg, 1);
-        } catch (NoResourcesException ex) {} // konieczne przez handler obslugujacy in i out
- 
-    }*/
     
     void transferForClient(User user) {
         Stage stg = display.createStage("Transfer");
+        stg.setOnCloseRequest(new exitButton(stg, this, true));
         int number = display.enterUserNumber("transfer money", stg);
         User target;
         try {
@@ -150,12 +130,6 @@ class BankSystem implements Serializable {
     
     void menuForClient(int choise, User user) {
         switch(choise) {
-       /* case 1:
-                payInForClient(user);
-                break;
-        case 2:
-                payOutForClient(user);
-                break;*/
         case 1:
                 transferForClient(user);
                 break;
@@ -208,6 +182,7 @@ class BankSystem implements Serializable {
 
     void addUser() {
         Stage stg = display.createStage("Add user");
+        stg.setOnCloseRequest(new exitButton(stg, this, true));
         GridPane mainWindow = display.createGridPane();
 
         Label label1 = new Label("System Number:");
@@ -277,15 +252,10 @@ class BankSystem implements Serializable {
         try {
             ArrayList<User> tmp = find.find();
             display.displayTable(tmp);
-           /* Iterator<User> it = tmp.iterator();
-            while(it.hasNext()) {
-                it.next().display();
-            }*/
         } catch (NoUserFindException e) {
             display.alert("No such user!");
             return;
         }
     }
-
-  
 }
+

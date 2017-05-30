@@ -33,7 +33,8 @@ public class paymentUtil {
     }
     
     void toPay() {
-        Stage stg = display.createStage("Payment");	
+        Stage stg = display.createStage("Payment");
+        stg.setOnCloseRequest(new exitButton(stg, bank, true));
         User topay;
         String text2 = "payment";
             try {   
@@ -54,6 +55,7 @@ public class paymentUtil {
     void toTake() {
         User totake;
         Stage stg = display.createStage("Payment");
+        stg.setOnCloseRequest(new exitButton(stg, bank, true));
         String text2 = "pay out";
         try {
             int number = display.enterUserNumber(text2, stg);

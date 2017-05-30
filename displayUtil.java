@@ -57,11 +57,9 @@ public class displayUtil {
     ArrayList<Button> createMenuButtonsForClient() {
         ArrayList<Button> buttons = new ArrayList<>();
         
-      //  Button btn1 = new Button("Pay in account");
-       // Button btn2 = new Button("Pay out from account");
+
         Button btn1 = new Button("Transfer money");
         Button btn2 = new Button("Display account");
-        //Button btn3 = new Button("Edit account");
         Button btn3 = new Button("Delete Account");
         Button btn4 = new Button("Save State"); 
         
@@ -69,8 +67,6 @@ public class displayUtil {
         buttons.add(btn2);
         buttons.add(btn3);
         buttons.add(btn4);
-      //  buttons.add(btn5);
-     //   buttons.add(btn6);
         
         return buttons;
     }
@@ -136,7 +132,8 @@ public class displayUtil {
         
         Button btn = new Button ("Close");
         btn.setOnAction(new cancelButton(stg));
-        btn.setTranslateX(250);
+        btn.setTranslateX(150);
+        btn.setMinWidth(400);
         
         StackPane root = new StackPane();
         root.getChildren().add(listView);

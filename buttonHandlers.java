@@ -43,12 +43,9 @@ class MenuButtonHandler implements EventHandler<ActionEvent> {
     @Override public void handle(ActionEvent e) {
         Button btn = (Button) e.getSource();
         int id = Integer.parseInt(btn.getId());
-        System.out.println(Bank.procedure);
-        System.out.println(id);
         if(Bank.procedure == 0) {
             bank.bankSystem.menuForBank(id);
         } else {
-            System.out.println(user);
             bank.bankSystem.menuForClient(id, user);
         }
     }
