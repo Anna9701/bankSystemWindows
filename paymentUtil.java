@@ -6,8 +6,6 @@
 package bank;
 
 import static bank.BankSystem.find;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,7 +22,7 @@ import javafx.stage.Stage;
  *
  * @author esperanza
  */
-public class paymentUtil {
+public class paymentUtil implements java.io.Serializable {
     private final BankSystem bank;
     private static final displayUtil display = new displayUtil();
     
@@ -33,8 +31,7 @@ public class paymentUtil {
     }
     
     void toPay() {
-        Stage stg = display.createStage("Payment");
-        stg.setOnCloseRequest(new exitButton(stg, bank, true));
+        Stage stg = display.createStage("Payment");	
         User topay;
         String text2 = "payment";
             try {   
@@ -55,7 +52,6 @@ public class paymentUtil {
     void toTake() {
         User totake;
         Stage stg = display.createStage("Payment");
-        stg.setOnCloseRequest(new exitButton(stg, bank, true));
         String text2 = "pay out";
         try {
             int number = display.enterUserNumber(text2, stg);

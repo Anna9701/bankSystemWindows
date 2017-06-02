@@ -7,8 +7,6 @@ package bank;
 
 
 import java.util.ArrayList;
-import java.util.Optional;
-import java.util.Vector;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
@@ -18,47 +16,22 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
-import javafx.event.EventHandler;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.WindowEvent;
-/**
- *
- * @author esperanza
- */
+
+
 public class Bank extends Application {
     BankSystem bankSystem;
     displayUtil display = new displayUtil();
     static int procedure;
+    loginUtil loginutil = new loginUtil();
 
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setOnCloseRequest(new exitButton(primaryStage, bankSystem, false));
-       /* primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                event.consume();
-                Alert alert = new Alert(AlertType.CONFIRMATION);
-                alert.setTitle("Close Confirmation");
-                alert.setHeaderText("Do you really want to quit?");
-                alert.initOwner(primaryStage);
-
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK){
-                  //  bankSystem.saveState();//////////////////////// saaaaaaaaaaave ????
-                    Platform.exit();
-                }
-            }
-        });*/
- 
         initUI(primaryStage);
     }
     
@@ -109,12 +82,8 @@ public class Bank extends Application {
         stage.setTitle("Database");
         stage.setScene(scene);
         stage.show();
-        
-        
     }
-    
-    
-    
+  
     void menu (Stage root) {
         root.hide();
         root.setOnCloseRequest(new exitButton(root, bankSystem, true));
@@ -136,14 +105,7 @@ public class Bank extends Application {
         if(procedure == 0) {
             buttons = display.createMenuButtonsForBank();
         } else {
-            try {
-                Stage stg = display.createStage("Client");
-                int number = display.enterUserNumber("start", stg);
-                usr = BankSystem.find.findByNumber(number);
-            } catch (NoUserFindException ex) {
-                new displayUtil().alert("No such user found!");
-                Platform.exit();
-            }
+            usr = loginutil.logInClient();
             buttons = display.createMenuButtonsForClient();
         }
         MenuButtonHandler mbh = new MenuButtonHandler(this, usr);
@@ -160,10 +122,9 @@ public class Bank extends Application {
         root.show();
     }
     
-   
-    /**
-     * @param args the command line arguments
-     */
+    
+    
+    
     public static void main(String[] args) {
         launch(args);
     }

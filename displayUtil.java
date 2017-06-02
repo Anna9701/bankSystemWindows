@@ -17,8 +17,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxListCell;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -57,7 +59,6 @@ public class displayUtil {
     ArrayList<Button> createMenuButtonsForClient() {
         ArrayList<Button> buttons = new ArrayList<>();
         
-
         Button btn1 = new Button("Transfer money");
         Button btn2 = new Button("Display account");
         Button btn3 = new Button("Delete Account");
@@ -111,6 +112,17 @@ public class displayUtil {
         return mainWindow;
     }
     
+    void setText(String txt, Text lb2) {
+            DropShadow ds = new DropShadow();
+            ds.setOffsetY(3.0f);
+            ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+            lb2.setEffect(ds);
+            lb2.setCache(true);
+            lb2.setFill(Color.RED);
+            lb2.setFont(Font.font(null, FontWeight.BOLD, 12));
+            lb2.setText(txt);
+        }
+    
     void displayTable(ArrayList<User> users) {
         Stage stg = createStage("Bank Accounts");
         GridPane window = createGridPane();
@@ -132,8 +144,7 @@ public class displayUtil {
         
         Button btn = new Button ("Close");
         btn.setOnAction(new cancelButton(stg));
-        btn.setTranslateX(150);
-        btn.setMinWidth(400);
+        btn.setTranslateX(250);
         
         StackPane root = new StackPane();
         root.getChildren().add(listView);
