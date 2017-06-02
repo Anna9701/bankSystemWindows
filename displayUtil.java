@@ -17,8 +17,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxListCell;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -52,6 +54,17 @@ public class displayUtil {
         buttons.add(btn8);
         
         return buttons;
+    }
+    
+    void setText(String txt, Text lb2) {
+        DropShadow ds = new DropShadow();
+        ds.setOffsetY(3.0f);
+        ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+        lb2.setEffect(ds);
+        lb2.setCache(true);
+        lb2.setFill(Color.RED);
+        lb2.setFont(Font.font(null, FontWeight.BOLD, 12));
+        lb2.setText(txt);
     }
     
     ArrayList<Button> createMenuButtonsForClient() {

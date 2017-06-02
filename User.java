@@ -1,6 +1,8 @@
 package bank;
 
+import java.security.Key;
 import java.util.Formatter;
+import javax.crypto.SecretKey;
 
 class NoUserFindException extends Exception {}
 
@@ -11,17 +13,27 @@ class User implements java.io.Serializable {
     private final long pesel;
     private final String adress;
     Account account;
-
+    private SecretKey secretkey;
+    private String pass;
+    private final passwordsUtil passwordsutil;
+    
 
     User(int sNo, String fname, String lname, long p, String adr, double money){
+        
         systemNumber = sNo;
         firstname = fname;
         lastname = lname;
         pesel = p;
         adress = adr;
         account = new Account (money);
+        passwordsutil = new passwordsUtil(this);
+        passwordsutil.changePassword();
     }
 
+    boolean checkPassword(String p) {
+        return passwordsutil.checkPassword(p);
+    }
+    
     void display () {
         System.out.println(systemNumber + "\t" + firstname + "\t" + lastname + "\t" + pesel + "\t" + adress + "\t" + account.getResources());
     }
@@ -55,4 +67,21 @@ class User implements java.io.Serializable {
         return adress;
     }
 
+    SecretKey getKey() {
+        return secretkey;
+    }
+    
+    String getPassword() {
+        return pass;
+    }
+    
+    void setKey(SecretKey key) {
+        secretkey = key;
+    }
+    
+    void setPassword(String s) {
+        pass = s;
+    }
 }
+
+

@@ -78,14 +78,7 @@ public class paymentUtil {
         TextField textField1 = new TextField();
 
         Text lb2 = new Text();
-        DropShadow ds = new DropShadow();
-        ds.setOffsetY(3.0f);
-        ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
-        lb2.setEffect(ds);
-        lb2.setCache(true);
-        lb2.setFill(Color.RED);
-        lb2.setFont(Font.font(null, FontWeight.BOLD, 12));
-
+        
         Button b1 = new Button("Cancel");
         Button b2 = new Button("Apply");
         b1.setOnAction(new cancelButton(stg));       

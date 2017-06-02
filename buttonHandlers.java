@@ -169,6 +169,7 @@ class applyPaymentButton implements EventHandler<ActionEvent> {
    BankSystem bank;
    Stage stg;
    User toPay;
+   static displayUtil display = new displayUtil();
    
    applyPaymentButton(TextField tf, Text lb, int m, BankSystem bk, Stage stage, User tP) {
        textField1 = tf;
@@ -201,7 +202,7 @@ class applyPaymentButton implements EventHandler<ActionEvent> {
                     toPay.account.payout(moneytopay);
                     stg.hide();
                 } catch (NoResourcesException ee) {
-                    lb2.setText("There is no resources to do this!");
+                    display.setText("There is no resources to do this!", lb2);
                     textField1.clear();
                 }
             }
