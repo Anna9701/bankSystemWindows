@@ -1,8 +1,6 @@
 package bank;
 
-import java.security.Key;
 import java.util.Formatter;
-import javax.crypto.SecretKey;
 
 class NoUserFindException extends Exception {}
 
