@@ -11,6 +11,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -63,7 +64,7 @@ public class passwordsUtil implements java.io.Serializable {
         window.add(btn2, 2, 3);
         Text error = new Text();
         window.add(error, 1, 4);
-        btn2.setOnAction(new cancelButton(stg));
+        btn2.setOnAction(new exitButton());
         
         passwordButton pB = new passwordButton(tf, tf2, stg, error);
         btn1.setOnAction(pB);
@@ -73,6 +74,14 @@ public class passwordsUtil implements java.io.Serializable {
         stg.showAndWait();
         
         return pB.tekst;
+    }
+    
+    class exitButton implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent event) {
+           Platform.exit();
+        }
+        
     }
     
     class passwordButton implements EventHandler<ActionEvent> {
