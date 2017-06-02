@@ -13,7 +13,6 @@ class User implements java.io.Serializable {
     private final long pesel;
     private final String adress;
     Account account;
-    private SecretKey secretkey;
     private String pass;
     private final passwordsUtil passwordsutil;
     
@@ -67,17 +66,13 @@ class User implements java.io.Serializable {
         return adress;
     }
 
-    SecretKey getKey() {
-        return secretkey;
-    }
+   
     
     String getPassword() {
         return pass;
     }
     
-    void setKey(SecretKey key) {
-        secretkey = key;
-    }
+  
     
     void setPassword(String s) {
         pass = s;

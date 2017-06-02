@@ -5,6 +5,8 @@
  */
 package bank;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -28,6 +30,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  *
@@ -99,18 +103,9 @@ public class passwordsUtil implements java.io.Serializable {
     }
     
      boolean checkPassword(String p) {
-        Cipher cipher = null;
-        String password = new String();
-        try {
-            cipher = Cipher.getInstance("Blowfish");
-            cipher.init(Cipher.DECRYPT_MODE, usr.getKey());
-            byte[] decrypted = cipher.doFinal(usr.getPassword().getBytes());
-            password = new String(decrypted);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(passwordsUtil.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      
+        String password = usr.getPassword();
+    
   
         if(password.equals(p)) {
             return true;
@@ -120,20 +115,9 @@ public class passwordsUtil implements java.io.Serializable {
     }
      
     void changePassword() {
-        try {
-            KeyGenerator keygenerator = KeyGenerator.getInstance("Blowfish");
-            SecretKey secretk = keygenerator.generateKey();
-            Cipher cipher = Cipher.getInstance("Blowfish");
-            cipher.init(Cipher.ENCRYPT_MODE, secretk);
-            String inputText = enterPassword();
-            byte[] encrypted = cipher.doFinal(inputText.getBytes());
-            usr.setKey(secretk);
-            usr.setPassword(encrypted.toString());
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalBlockSizeException | BadPaddingException ex) {
-            Logger.getLogger(passwordsUtil.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String inputText = enterPassword();
+  
+        usr.setPassword(inputText);
     }
 
 }
