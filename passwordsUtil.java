@@ -64,7 +64,7 @@ public class passwordsUtil implements java.io.Serializable {
         window.add(btn2, 2, 3);
         Text error = new Text();
         window.add(error, 1, 4);
-        btn2.setOnAction(new exitButton());
+        btn2.setOnAction(new cancelButton(stg));
         
         passwordButton pB = new passwordButton(tf, tf2, stg, error);
         btn1.setOnAction(pB);
@@ -76,13 +76,7 @@ public class passwordsUtil implements java.io.Serializable {
         return pB.tekst;
     }
     
-    class exitButton implements EventHandler<ActionEvent> {
-        @Override
-        public void handle(ActionEvent event) {
-           Platform.exit();
-        }
-        
-    }
+   
     
     class passwordButton implements EventHandler<ActionEvent> {
         String tekst;

@@ -48,7 +48,7 @@ public class loginUtil implements java.io.Serializable {
         Button btn2 = new Button("Cancel");
         mainWindow.add(btn1, 1, 4);
         mainWindow.add(btn2, 2, 4);
-        btn2.setOnAction(new cancelButton(stg));
+        btn2.setOnAction(new exitButton(stg));
 
         clientLogInButton handler = new clientLogInButton(stg, tf, tf2, tf3, text);
         btn1.setOnAction(handler);
@@ -58,6 +58,19 @@ public class loginUtil implements java.io.Serializable {
         stg.showAndWait();
         
         return handler.getUser();
+    }
+    
+     class exitButton implements EventHandler<ActionEvent> {
+        Stage stg;
+        
+        exitButton(Stage s) {
+            stg = s;
+        }
+        @Override
+        public void handle(ActionEvent event) {
+           stg.close();
+           Platform.exit();
+        }
     }
     
     class clientLogInButton implements EventHandler<ActionEvent> {
@@ -84,16 +97,20 @@ public class loginUtil implements java.io.Serializable {
             boolean state = false;
             if(tf2.getText().equals(tf3.getText())) {
                state = usr.checkPassword(tf2.getText());
-            } else {
-                display.setText("Passwords aren't the same", txt);
-            }
-            if(!state) {
+               if(!state) {
                 display.alert("Wrong password!");
                 tf2.clear();
                 tf3.clear();
+                txt.setText("");
+                } else {
+                    stg.hide();
+                }
             } else {
-                stg.hide();
+                display.setText("Passwords aren't the same", txt);
+                tf2.clear();
+                tf3.clear();
             }
+            
         }
         
         void checkNumber() {
