@@ -19,6 +19,7 @@ public class findUtil {
     private transient Scanner in = new Scanner (System.in);
     private ArrayList<User> users;
     private displayUtil display = new displayUtil();
+    private enterUtil enter = new enterUtil();
     
     findUtil(Scanner in, ArrayList<User> users) {
        this.in = in;
@@ -42,7 +43,7 @@ public class findUtil {
         Scene scene = new Scene(mainWindow);
         stage.setScene(scene);
         stage.showAndWait();
-       // stage.show();
+
         return fbh.choise;
     }
 
@@ -92,9 +93,9 @@ public class findUtil {
         User user = null;
         Stage stg = display.createStage("Find by number");
         String text1 = "find";
-        //GridPane mainWindow = display.createGridPane();
+       
         
-       int numbertofind = display.enterUserNumber(text1, stg);
+       int numbertofind = enter.enterUserNumber(text1, stg);
        if(numbertofind == -1) {
            return user;
        }
@@ -125,7 +126,7 @@ public class findUtil {
         String text1 = "name", text2 = "to find";
         Stage stg = display.createStage("Find by name");
        
-        String name = display.enterUserText(text1, text2, stg);
+        String name = enter.enterUserText(text1, text2, stg);
         if(name.equals("-1")) {
             return usersfinded;
         }
@@ -162,7 +163,7 @@ public class findUtil {
         String text1 = "lastname", text2 = "to find";
         Stage stg = display.createStage("Find by lastname");
        
-        String lastname = display.enterUserText(text1, text2, stg);
+        String lastname = enter.enterUserText(text1, text2, stg);
         if(lastname.equals("-1")) {
             return usersfinded;
         }
@@ -200,7 +201,7 @@ public class findUtil {
         String text1 = "address", text2 = "to find";
         Stage stg = display.createStage("Find by adress");
        
-        String adress = display.enterUserText(text1, text2, stg);
+        String adress = enter.enterUserText(text1, text2, stg);
         if(adress.equals("-1")) {
             return usersfinded;
         }
@@ -236,7 +237,7 @@ public class findUtil {
         String text1 = "find";
         Stage stg = display.createStage("Find by PESEL");
        
-        long numbertofind = display.enterUserLong(text1, stg);
+        long numbertofind = enter.enterUserLong(text1, stg);
         if(numbertofind == -1) {
             return user;
         }

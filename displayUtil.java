@@ -41,7 +41,7 @@ public class displayUtil {
         Button btn5 = new Button("Transofrm money between accounts");
         Button btn6 = new Button("Display information about all accounts");
         Button btn7 = new Button("Display information about specific accounts");
-        Button btn8 = new Button("Save State"); 
+       
         
         ArrayList<Button> buttons = new ArrayList<>();
         buttons.add(btn1);
@@ -51,7 +51,7 @@ public class displayUtil {
         buttons.add(btn5);
         buttons.add(btn6);
         buttons.add(btn7);
-        buttons.add(btn8);
+     
         
         return buttons;
     }
@@ -74,7 +74,7 @@ public class displayUtil {
         Button btn1 = new Button("Transfer money");
         Button btn2 = new Button("Display account");
         Button btn3 = new Button("Delete Account");
-        Button btn4 = new Button("Save State"); 
+        Button btn4 = new Button("Change Password"); 
         
         buttons.add(btn1);
         buttons.add(btn2);
@@ -100,6 +100,37 @@ public class displayUtil {
         buttons.add(btn6);
         
         return buttons;
+    }
+    
+    ArrayList<Label> createAddLabels() {
+        Label label1 = new Label("System Number:");
+        Label label2 = new Label("First name:");
+        Label label3 = new Label("LastName:");
+        Label label4 = new Label("PESEL:");
+        Label label5 = new Label("Adress:");
+        Label label6 = new Label("Amount of money:");
+        
+        ArrayList<Label> labels = new ArrayList<>();
+        labels.add(label1);
+        labels.add(label2);
+        labels.add(label3);
+        labels.add(label4);
+        labels.add(label5);
+        labels.add(label6);
+        
+        return labels;
+    }
+    
+    ArrayList<TextField> createAddTextFields() {
+        int amount = 6;
+        ArrayList<TextField> fields = new ArrayList<>();
+        
+        for(int i = 0; i < amount; ++i) {
+            TextField textField = new TextField ();
+            fields.add(textField);
+        }
+        
+        return fields;
     }
     
     void alert(String text) {
@@ -189,88 +220,4 @@ public class displayUtil {
         stg.show();
         
     }
-    
-    int enterUserNumber (String text, Stage stg) {
-        GridPane mainWindow = display.createGridPane();
-
-        Label lb = new Label("Enter system number of user to " + text);
-        TextField tf = new TextField();
-        mainWindow.add(lb, 1, 1);
-        mainWindow.add(tf, 2, 1);
-        Button btn1 = new Button("Enter");
-        Button btn2 = new Button("Cancel");
-        mainWindow.add(btn1, 1, 2);
-        mainWindow.add(btn2, 2, 2);
-        btn2.setOnAction(new cancelButton(stg));
-
-        enterUserNumberButton handler = new enterUserNumberButton(tf, stg);
-        btn1.setOnAction(handler);
-
-        Scene scene = new Scene(mainWindow);
-        stg.setScene(scene);
-        stg.showAndWait();
-
-       if(handler.flag == true) {
-        return handler.number;
-       } else {
-           return -1;
-       }
-    }
-    
-     long enterUserLong (String text, Stage stg) {
-
-        GridPane mainWindow = display.createGridPane();
-
-        Label lb = new Label("Enter number of user to " + text);
-        TextField tf = new TextField();
-        mainWindow.add(lb, 1, 1);
-        mainWindow.add(tf, 2, 1);
-        Button btn1 = new Button("Enter");
-        Button btn2 = new Button("Cancel");
-        mainWindow.add(btn1, 1, 2);
-        mainWindow.add(btn2, 2, 2);
-        btn2.setOnAction(new cancelButton(stg));
-
-        enterUserLongButton handler = new enterUserLongButton(tf, stg);
-        btn1.setOnAction(handler);
-
-        Scene scene = new Scene(mainWindow);
-        stg.setScene(scene);
-        stg.showAndWait();
-
-        if(handler.flag) {
-            return handler.number;
-        } else {
-            return -1;
-        }
-    }
-     
-    String enterUserText (String text, String text2, Stage stg) {
-
-        GridPane mainWindow = display.createGridPane();
-
-        Label lb = new Label("Enter " + text + " of user to " + text2);
-        TextField tf = new TextField();
-        mainWindow.add(lb, 1, 1);
-        mainWindow.add(tf, 2, 1);
-        Button btn1 = new Button("Enter");
-        Button btn2 = new Button("Cancel");
-        mainWindow.add(btn1, 1, 2);
-        mainWindow.add(btn2, 2, 2);
-        btn2.setOnAction(new cancelButton(stg));
-
-        enterUserTextButton handler = new enterUserTextButton(tf, stg);
-        btn1.setOnAction(handler);
-
-        Scene scene = new Scene(mainWindow);
-        stg.setScene(scene);
-        stg.showAndWait();
-
-       if(handler.flag) {
-        return handler.text;
-       } else {
-           return "-1";
-       }
-    }
-    
 }

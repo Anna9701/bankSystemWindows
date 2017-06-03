@@ -29,6 +29,8 @@ class BankSystem implements Serializable {
     private static displayUtil display = new displayUtil();
     private static paymentUtil payments;
     private static int procedure;
+    private static final enterUtil enter = new enterUtil();
+ 
     
     BankSystem(String file, int mode, int md) {
         if(mode == 1) {
@@ -69,7 +71,7 @@ class BankSystem implements Serializable {
         Stage stg = display.createStage("Delete User");
         stg.setOnCloseRequest(new closeWindowButton(stg, this, true));
         String text2 = "delete";
-        int todelete = display.enterUserNumber(text2, stg);
+        int todelete = enter.enterUserNumber(text2, stg);
         if (todelete == -1) {
             return;
         }
@@ -110,9 +112,6 @@ class BankSystem implements Serializable {
         case 7:
                 displaySpecific();
                 break;
-        case 8:
-                saveState();
-                break;
         }
     }
     
@@ -120,7 +119,7 @@ class BankSystem implements Serializable {
     void transferForClient(User user) {
         Stage stg = display.createStage("Transfer");
         stg.setOnCloseRequest(new closeWindowButton(stg, this, true));
-        int number = display.enterUserNumber("transfer money", stg);
+        int number = enter.enterUserNumber("transfer money", stg);
         if(number == -1) {
             return;
         }
@@ -136,7 +135,7 @@ class BankSystem implements Serializable {
           
     }
     
-    void menuForClient(int choise, User user) {
+    void menuForClient(int choise, User user) throws noPasswordException {
         switch(choise) {
         case 1:
                 transferForClient(user);
@@ -148,10 +147,12 @@ class BankSystem implements Serializable {
                 deleteUserForClient(user);
                 break;
         case 4:
-                saveState();
+                new passwordsUtil(user).changePassword();
                 break;
         }
     }
+    
+    
     
     void deleteUserForClient(User user) {
         if(confirm("delete", user)) {
@@ -193,21 +194,8 @@ class BankSystem implements Serializable {
         stg.setOnCloseRequest(new closeWindowButton(stg, this, true));
         GridPane mainWindow = display.createGridPane();
 
-        Label label1 = new Label("System Number:");
-        final TextField textField1 = new TextField ();
-        Label label2 = new Label("First name:");
-        TextField textField2 = new TextField ();
-        Label label3 = new Label("LastName:");
-        TextField textField3 = new TextField ();
-        Label label4 = new Label("PESEL:");
-        TextField textField4 = new TextField ();
-        Label label5 = new Label("Adress:");
-        TextField textField5 = new TextField ();
-        Label label6 = new Label("Amount of money:");
-        TextField textField6 = new TextField ();
-
-        Label labels [] = {label1, label2, label3, label4, label5, label6};
-        TextField textFields [] = {textField1, textField2, textField3, textField4, textField5, textField6};
+        ArrayList <Label> labels = display.createAddLabels();
+        ArrayList <TextField> textFields = display.createAddTextFields();
 
         int start = 1;
         for (Label label : labels) {
@@ -224,19 +212,7 @@ class BankSystem implements Serializable {
         mainWindow.add(btn2, 1, start);
         mainWindow.add(btn1, 2, start);
 
-        btn1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                int number = Integer.parseInt(textField1.getText());
-                String fname = textField2.getText();
-                String lname = textField3.getText();
-                long pesel = Long.parseLong(textField4.getText());
-                String adress = textField5.getText();
-                Double money = Double.parseDouble(textField6.getText());
-                addUser(number, fname, lname, pesel, adress, money);
-                stg.close();
-            }
-        });
+        btn1.setOnAction(new addUserButton(textFields, stg, this)); 
 
         Scene scene = new Scene(mainWindow);
         stg.setScene(scene);
@@ -247,7 +223,7 @@ class BankSystem implements Serializable {
        users.remove(todelete);
     }
 
-    private void addUser (int sNo, String fname, String lname, long p, String adr, double money){
+    void addUser (int sNo, String fname, String lname, long p, String adr, double money){
         User add;
         try {
             add = new User(sNo, fname, lname, p, adr, money);

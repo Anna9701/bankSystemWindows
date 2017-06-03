@@ -5,6 +5,7 @@
  */
 package bank;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -43,7 +44,9 @@ class MenuButtonHandler implements EventHandler<ActionEvent> {
         if(Bank.procedure == 0) {
             bank.bankSystem.menuForBank(id);
         } else {
-            bank.bankSystem.menuForClient(id, user);
+            try {
+                bank.bankSystem.menuForClient(id, user);
+            } catch (noPasswordException er) {}
         }
     }
 }
@@ -304,5 +307,26 @@ class exitButton implements EventHandler<WindowEvent> {
             }
      }
 }
-        
 
+class addUserButton implements EventHandler<ActionEvent> {
+    ArrayList <TextField> textFields;
+    BankSystem bs;
+    Stage stg;
+    
+    addUserButton(ArrayList<TextField> tf, Stage s, BankSystem b) {
+        textFields = tf;
+        bs = b;
+        stg = s;
+    }
+    @Override
+    public void handle(ActionEvent event) {
+        int number = Integer.parseInt(textFields.get(0).getText());
+        String fname = textFields.get(1).getText();
+        String lname = textFields.get(2).getText();
+        long pesel = Long.parseLong(textFields.get(3).getText());
+        String adress = textFields.get(4).getText();
+        Double money = Double.parseDouble(textFields.get(5).getText());
+        bs.addUser(number, fname, lname, pesel, adress, money);
+        stg.close();
+    }
+}

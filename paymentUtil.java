@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 public class paymentUtil {
     private final BankSystem bank;
     private static final displayUtil display = new displayUtil();
+    private final enterUtil enter = new enterUtil();
     
     paymentUtil(BankSystem bk) {
         bank = bk;
@@ -38,7 +39,7 @@ public class paymentUtil {
         User topay;
         String text2 = "payment";
             try {   
-                int number = display.enterUserNumber(text2, stg);
+                int number = enter.enterUserNumber(text2, stg);
                 if (number == -1) {
                     return;
                 }
@@ -61,7 +62,7 @@ public class paymentUtil {
         stg.setOnCloseRequest(new closeWindowButton(stg, bank, true));
         String text2 = "pay out";
         try {
-            int number = display.enterUserNumber(text2, stg);
+            int number = enter.enterUserNumber(text2, stg);
             if(number == -1) {
                 return;
             }
@@ -139,7 +140,7 @@ public class paymentUtil {
         stg.setOnCloseRequest(new closeWindowButton(stg, bank, true));
         
         try {
-            int number1 = display.enterUserNumber (txt1, stg);
+            int number1 = enter.enterUserNumber (txt1, stg);
             if(number1 == -1) {
                 return;
             }
@@ -151,7 +152,7 @@ public class paymentUtil {
         }
 
         try {
-            int number2 = display.enterUserNumber (txt2, stg);
+            int number2 = enter.enterUserNumber (txt2, stg);
             if(number2 == -1) {
                 return;
             }
