@@ -89,13 +89,16 @@ public class findUtil {
     
     
     User findByNumber() throws NoUserFindException {
-        User user;
+        User user = null;
         Stage stg = display.createStage("Find by number");
         String text1 = "find";
         //GridPane mainWindow = display.createGridPane();
         
        int numbertofind = display.enterUserNumber(text1, stg);
-        
+       if(numbertofind == -1) {
+           return user;
+       }
+       
        try {
             user = findByNumber(numbertofind);
         } catch (NoUserFindException e) {
@@ -123,7 +126,10 @@ public class findUtil {
         Stage stg = display.createStage("Find by name");
        
         String name = display.enterUserText(text1, text2, stg);
-
+        if(name.equals("-1")) {
+            return usersfinded;
+        }
+        
         try {
             usersfinded = findByName(name);
         } catch (NoUserFindException e) {
@@ -157,7 +163,10 @@ public class findUtil {
         Stage stg = display.createStage("Find by lastname");
        
         String lastname = display.enterUserText(text1, text2, stg);
-
+        if(lastname.equals("-1")) {
+            return usersfinded;
+        }
+        
         try {
             usersfinded = findByLastName(lastname);
         } catch (NoUserFindException e) {
@@ -192,7 +201,10 @@ public class findUtil {
         Stage stg = display.createStage("Find by adress");
        
         String adress = display.enterUserText(text1, text2, stg);
-
+        if(adress.equals("-1")) {
+            return usersfinded;
+        }
+        
         try {
             usersfinded = findByAdress(adress);
         } catch (NoUserFindException e) {
@@ -220,12 +232,15 @@ public class findUtil {
     }
 
     User findByPesel() throws NoUserFindException {
-        User user;
+        User user = null;
         String text1 = "find";
         Stage stg = display.createStage("Find by PESEL");
        
         long numbertofind = display.enterUserLong(text1, stg);
-
+        if(numbertofind == -1) {
+            return user;
+        }
+        
         try {
             user = findByPesel(numbertofind);
         } catch (NoUserFindException e) {

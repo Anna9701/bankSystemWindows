@@ -28,7 +28,7 @@ public class passwordsUtil implements java.io.Serializable {
         usr = u;
     }
     
-    String enterPassword() {
+    String enterPassword() throws noPasswordException {
         Stage stg = display.createStage("Enter password");
         GridPane window = display.createGridPane();
         Label lb = new Label("Enter password: ");
@@ -45,19 +45,37 @@ public class passwordsUtil implements java.io.Serializable {
         window.add(btn2, 2, 3);
         Text error = new Text();
         window.add(error, 1, 4);
-        btn2.setOnAction(new cancelButton(stg));
         
+        
+        cancelPasswordButton cPB = new cancelPasswordButton(stg);
         passwordButton pB = new passwordButton(tf, tf2, stg, error);
         btn1.setOnAction(pB);
+        btn2.setOnAction(cPB);
         
         Scene scene = new Scene(window);
         stg.setScene(scene);
         stg.showAndWait();
         
-        return pB.tekst;
+        if(cPB.flag) {
+            throw new noPasswordException();
+        } else {
+            return pB.tekst;
+        }
     }
     
-   
+   class cancelPasswordButton implements EventHandler<ActionEvent> {
+        Stage window;
+        boolean flag = false;
+        
+        cancelPasswordButton(Stage stg) {
+            window = stg;
+        }
+        @Override 
+        public void handle(ActionEvent e) {
+            flag = true;
+            window.close();
+        }
+}
     
     class passwordButton implements EventHandler<ActionEvent> {
         String tekst;
@@ -75,9 +93,13 @@ public class passwordsUtil implements java.io.Serializable {
 
         @Override
         public void handle(ActionEvent event) {
-            if(tf.getText().equals(tf2.getText())) {
+            if(tf.getText().equals(tf2.getText()) && !tf.getText().isEmpty()) {
                 tekst = tf.getText();
                 stage.hide();
+            } else if (tf.getText().isEmpty()) {
+                display.setText("You have to enter password", error);
+                tf.clear();
+                tf2.clear();
             } else {
                 display.setText("Password aren't the same!", error);
                 tf.clear();
@@ -98,10 +120,15 @@ public class passwordsUtil implements java.io.Serializable {
         }
     }
      
-    void changePassword() {
-        String inputText = enterPassword();
-  
-        usr.setPassword(inputText);
+    void changePassword() throws noPasswordException {
+        try {
+            String inputText = enterPassword();
+            usr.setPassword(inputText);
+        } catch (noPasswordException e) {
+            throw e;
+        }
     }
 
 }
+
+class noPasswordException extends Exception {};

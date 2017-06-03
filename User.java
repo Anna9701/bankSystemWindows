@@ -15,7 +15,7 @@ class User implements java.io.Serializable {
     private final passwordsUtil passwordsutil;
     
 
-    User(int sNo, String fname, String lname, long p, String adr, double money){
+    User(int sNo, String fname, String lname, long p, String adr, double money) throws noPasswordException{
         
         systemNumber = sNo;
         firstname = fname;
@@ -24,7 +24,11 @@ class User implements java.io.Serializable {
         adress = adr;
         account = new Account (money);
         passwordsutil = new passwordsUtil(this);
-        passwordsutil.changePassword();
+        try {
+            passwordsutil.changePassword();
+        } catch (noPasswordException e) {
+            throw e;
+        }
     }
 
     boolean checkPassword(String p) {

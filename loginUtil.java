@@ -48,7 +48,7 @@ public class loginUtil implements java.io.Serializable {
         Button btn2 = new Button("Cancel");
         mainWindow.add(btn1, 1, 4);
         mainWindow.add(btn2, 2, 4);
-        btn2.setOnAction(new exitButton(stg));
+        btn2.setOnAction(new cancelLogInButton(stg));
 
         clientLogInButton handler = new clientLogInButton(stg, tf, tf2, tf3, text);
         btn1.setOnAction(handler);
@@ -60,10 +60,10 @@ public class loginUtil implements java.io.Serializable {
         return handler.getUser();
     }
     
-     class exitButton implements EventHandler<ActionEvent> {
+     class cancelLogInButton implements EventHandler<ActionEvent> {
         Stage stg;
         
-        exitButton(Stage s) {
+        cancelLogInButton(Stage s) {
             stg = s;
         }
         @Override

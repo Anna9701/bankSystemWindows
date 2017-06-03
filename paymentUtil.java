@@ -34,11 +34,14 @@ public class paymentUtil {
     
     void toPay() {
         Stage stg = display.createStage("Payment");
-        stg.setOnCloseRequest(new exitButton(stg, bank, true));
+        stg.setOnCloseRequest(new closeWindowButton(stg, bank, true));
         User topay;
         String text2 = "payment";
             try {   
                 int number = display.enterUserNumber(text2, stg);
+                if (number == -1) {
+                    return;
+                }
                 topay = find.findByNumber(number);
                 if(bank.confirm("payment", topay)) {
                     try {
@@ -55,10 +58,13 @@ public class paymentUtil {
     void toTake() {
         User totake;
         Stage stg = display.createStage("Payment");
-        stg.setOnCloseRequest(new exitButton(stg, bank, true));
+        stg.setOnCloseRequest(new closeWindowButton(stg, bank, true));
         String text2 = "pay out";
         try {
             int number = display.enterUserNumber(text2, stg);
+            if(number == -1) {
+                return;
+            }
             totake = find.findByNumber(number);
             if(bank.confirm("payout", totake)) {
                 try {
@@ -130,9 +136,13 @@ public class paymentUtil {
         User user1, user2;
         String txt1 = "pay in", txt2 = "take from";
         Stage stg = display.createStage("transform");
-
+        stg.setOnCloseRequest(new closeWindowButton(stg, bank, true));
+        
         try {
             int number1 = display.enterUserNumber (txt1, stg);
+            if(number1 == -1) {
+                return;
+            }
             user1 = find.findByNumber(number1);         
         } catch (NoUserFindException e) {
             display.alert("No such user find.");
@@ -142,6 +152,9 @@ public class paymentUtil {
 
         try {
             int number2 = display.enterUserNumber (txt2, stg);
+            if(number2 == -1) {
+                return;
+            }
             user2 = find.findByNumber(number2);
         } catch (NoUserFindException e) {
             display.alert("No such user find.");

@@ -114,13 +114,15 @@ class enterUserNumberButton implements EventHandler<ActionEvent> {
         TextField tf;
         int number;
         Stage stg;
-
+        boolean flag = false;
+        
         enterUserNumberButton(TextField text, Stage stag) {
             tf = text;
             stg = stag;
         }
         @Override
         public void handle(ActionEvent e) {
+            flag = true;
             number = Integer.parseInt(tf.getText());
             stg.hide();
         }
@@ -130,6 +132,7 @@ class enterUserLongButton implements EventHandler<ActionEvent> {
         TextField tf;
         long number;
         Stage stg;
+        boolean flag = false;
 
         enterUserLongButton(TextField text, Stage stag) {
             tf = text;
@@ -137,6 +140,7 @@ class enterUserLongButton implements EventHandler<ActionEvent> {
         }
         @Override
         public void handle(ActionEvent e) {
+            flag = true;
             number = Long.parseLong(tf.getText());
             stg.hide();
         }
@@ -147,13 +151,15 @@ class enterUserTextButton implements EventHandler<ActionEvent> {
         TextField tf;
         String text;
         Stage stg;
-
+        boolean flag = false;
+        
         enterUserTextButton(TextField text, Stage stag) {
             tf = text;
             stg = stag;
         }
         @Override
         public void handle(ActionEvent e) {
+            flag = true;
             text = tf.getText();
             stg.hide();
         }
@@ -241,6 +247,34 @@ class applyTransferButton implements EventHandler<ActionEvent> {
         }
 
     } 
+}
+
+class closeWindowButton implements EventHandler<WindowEvent> {
+    Stage stage;
+    boolean saveFlag;
+    BankSystem bankSystem;
+    
+    closeWindowButton(Stage stg, BankSystem bank, boolean flag) {
+        stage = stg;
+        bankSystem = bank;
+        saveFlag = flag;
+    }
+    @Override
+    public void handle(WindowEvent event) {
+        event.consume();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Close Confirmation");
+        alert.setHeaderText("Do you really want to close this window?");
+        alert.initOwner(stage);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            if(saveFlag) {
+              bankSystem.saveState();//////////////////////// saaaaaaaaaaave ????
+            }
+            stage.close();
+        }
+     }
 }
 
 class exitButton implements EventHandler<WindowEvent> {

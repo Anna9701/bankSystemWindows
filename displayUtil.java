@@ -191,7 +191,6 @@ public class displayUtil {
     }
     
     int enterUserNumber (String text, Stage stg) {
-
         GridPane mainWindow = display.createGridPane();
 
         Label lb = new Label("Enter system number of user to " + text);
@@ -211,8 +210,11 @@ public class displayUtil {
         stg.setScene(scene);
         stg.showAndWait();
 
-
-       return handler.number;
+       if(handler.flag == true) {
+        return handler.number;
+       } else {
+           return -1;
+       }
     }
     
      long enterUserLong (String text, Stage stg) {
@@ -236,8 +238,11 @@ public class displayUtil {
         stg.setScene(scene);
         stg.showAndWait();
 
-
-       return handler.number;
+        if(handler.flag) {
+            return handler.number;
+        } else {
+            return -1;
+        }
     }
      
     String enterUserText (String text, String text2, Stage stg) {
@@ -261,8 +266,11 @@ public class displayUtil {
         stg.setScene(scene);
         stg.showAndWait();
 
-
-       return handler.text;
+       if(handler.flag) {
+        return handler.text;
+       } else {
+           return "-1";
+       }
     }
     
 }

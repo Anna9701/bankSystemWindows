@@ -67,17 +67,22 @@ class BankSystem implements Serializable {
 
      void deleteUser() {
         Stage stg = display.createStage("Delete User");
-        stg.setOnCloseRequest(new exitButton(stg, this, true));
+        stg.setOnCloseRequest(new closeWindowButton(stg, this, true));
         String text2 = "delete";
+        int todelete = display.enterUserNumber(text2, stg);
+        if (todelete == -1) {
+            return;
+        }
         try {
-            int todelete = display.enterUserNumber(text2, stg);
             User tmp = find.findByNumber(todelete);
             if(confirm("delete", tmp)) {
-                    deleteUser(tmp);
+                deleteUser(tmp);
             }
         } catch (NoUserFindException er) {
+            System.out.println("tu jestem");
             display.alert("No such user found");
         }  
+
     }
     
      
@@ -111,11 +116,14 @@ class BankSystem implements Serializable {
         }
     }
     
-    
+  
     void transferForClient(User user) {
         Stage stg = display.createStage("Transfer");
-        stg.setOnCloseRequest(new exitButton(stg, this, true));
+        stg.setOnCloseRequest(new closeWindowButton(stg, this, true));
         int number = display.enterUserNumber("transfer money", stg);
+        if(number == -1) {
+            return;
+        }
         User target;
         try {
             target = find.findByNumber(number);
@@ -182,7 +190,7 @@ class BankSystem implements Serializable {
 
     void addUser() {
         Stage stg = display.createStage("Add user");
-        stg.setOnCloseRequest(new exitButton(stg, this, true));
+        stg.setOnCloseRequest(new closeWindowButton(stg, this, true));
         GridPane mainWindow = display.createGridPane();
 
         Label label1 = new Label("System Number:");
@@ -240,7 +248,12 @@ class BankSystem implements Serializable {
     }
 
     private void addUser (int sNo, String fname, String lname, long p, String adr, double money){
-        User add = new User(sNo, fname, lname, p, adr, money);
+        User add;
+        try {
+            add = new User(sNo, fname, lname, p, adr, money);
+        } catch (noPasswordException e) {
+            return;
+        }
         if(confirm("add", add)) {
             users.add(add);
         }
@@ -251,7 +264,9 @@ class BankSystem implements Serializable {
     void displaySpecific() {
         try {
             ArrayList<User> tmp = find.find();
-            display.displayTable(tmp);
+            if (!tmp.isEmpty()) {
+                display.displayTable(tmp);
+            }
         } catch (NoUserFindException e) {
             display.alert("No such user!");
             return;
