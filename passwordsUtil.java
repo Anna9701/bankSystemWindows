@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -32,9 +33,10 @@ public class passwordsUtil implements java.io.Serializable {
         Stage stg = display.createStage("Enter password");
         GridPane window = display.createGridPane();
         Label lb = new Label("Enter password: ");
-        TextField tf = new TextField();
+        PasswordField tf = new PasswordField();
+        
         Label lb2 = new Label("Confirm password: ");
-        TextField tf2 = new TextField();
+        PasswordField tf2 = new PasswordField();
         window.add(lb, 1, 1);
         window.add(tf, 2, 1);
         window.add(lb2, 1, 2);
@@ -79,12 +81,12 @@ public class passwordsUtil implements java.io.Serializable {
     
     class passwordButton implements EventHandler<ActionEvent> {
         String tekst;
-        TextField tf;
-        TextField tf2;
+        PasswordField tf;
+        PasswordField tf2;
         Stage stage;
         Text error;
         
-        passwordButton(TextField text, TextField text2, Stage stg, Text err) {
+        passwordButton(PasswordField text, PasswordField text2, Stage stg, Text err) {
             tf = text;
             tf2 = text2;
             stage = stg;

@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -34,8 +35,8 @@ public class loginUtil implements java.io.Serializable {
         Label lb2 = new Label("Enter password of user to log in");
         Label lb3 = new Label("Confirm password of user to log in");
         TextField tf = new TextField();
-        TextField tf2 = new TextField();
-        TextField tf3 = new TextField();
+        PasswordField tf2 = new PasswordField();
+        PasswordField tf3 = new PasswordField();
         Text text = new Text();
         mainWindow.add(lb, 1, 1);
         mainWindow.add(tf, 2, 1);
