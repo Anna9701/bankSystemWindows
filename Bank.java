@@ -55,8 +55,13 @@ public class Bank extends Application {
         tb2.setToggleGroup(group);
         tb2.setTranslateX(50);
         
+        
         Button btn1 = new Button("Load");
         Button btn2 = new Button("Create");
+        
+        tb2.setOnAction(new toggleMyButton(btn2, false));
+        tb1.setOnAction(new toggleMyButton(btn2, true));
+        
         Label lbl1 = new Label("Name of database");
         TextField field1 = new TextField();
         

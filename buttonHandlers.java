@@ -65,7 +65,20 @@ class FindButtonHandler implements EventHandler<ActionEvent> {
         stg.hide();
     }
 }
+class toggleMyButton implements EventHandler<ActionEvent> {
+    Button btn;
+    boolean mode;
     
+    toggleMyButton (Button b, boolean m) {
+        btn = b;
+        mode = m;
+    }
+    @Override
+    public void handle(ActionEvent event) {
+        btn.setVisible(mode);
+    }
+}   
+
 class MyButtonHandler implements EventHandler<ActionEvent> {
     TextField name;
     Stage root;
