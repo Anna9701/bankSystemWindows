@@ -325,6 +325,8 @@ class addUserButton implements EventHandler<ActionEvent> {
     ArrayList <TextField> textFields;
     BankSystem bs;
     Stage stg;
+    validateUtil validate = new validateUtil();
+    boolean flag = true;
     
     addUserButton(ArrayList<TextField> tf, Stage s, BankSystem b) {
         textFields = tf;
@@ -333,13 +335,19 @@ class addUserButton implements EventHandler<ActionEvent> {
     }
     @Override
     public void handle(ActionEvent event) {
-        int number = Integer.parseInt(textFields.get(0).getText());
-        String fname = textFields.get(1).getText();
-        String lname = textFields.get(2).getText();
-        long pesel = Long.parseLong(textFields.get(3).getText());
-        String adress = textFields.get(4).getText();
-        Double money = Double.parseDouble(textFields.get(5).getText());
-        bs.addUser(number, fname, lname, pesel, adress, money);
-        stg.close();
+        if(validate.checkUser(textFields)) {
+            int number = Integer.parseInt(textFields.get(0).getText());
+
+            String fname = textFields.get(1).getText();
+            String lname = textFields.get(2).getText();
+            long pesel = Long.parseLong(textFields.get(3).getText());
+            String adress = textFields.get(4).getText();
+            Double money = Double.parseDouble(textFields.get(5).getText());
+            bs.addUser(number, fname, lname, pesel, adress, money);
+
+            stg.close();
+        }
     }
 }
+
+

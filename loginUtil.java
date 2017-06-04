@@ -5,15 +5,20 @@
  */
 package bank;
 
+import static bank.Bank.procedure;
+import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -130,4 +135,41 @@ public class loginUtil implements java.io.Serializable {
         }
                 
     }
+    
+    void menu (int procedure, Stage root, Bank bank) {
+        ArrayList<Button> buttons = new ArrayList<>();
+        GridPane mainWindow = new GridPane();
+        mainWindow.setVgap(10);
+        mainWindow.setHgap(10);
+        mainWindow.setPadding(new Insets(15, 15, 15, 15));
+        User usr = null;
+ 
+        Label lb = new Label("Welcome in our Bank System!");
+        lb.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        lb.setPadding(new Insets(15, 15, 15, 15));
+        mainWindow.add(lb, 1, 1);
+        
+        int start = 3;
+        int id = 1;
+        
+        if(procedure == 0) {
+            buttons = display.createMenuButtonsForBank();
+        } else {
+            usr = logInClient();
+            buttons = display.createMenuButtonsForClient();
+        }
+        MenuButtonHandler mbh = new MenuButtonHandler(bank, usr);
+        for (Button button : buttons) {
+            mainWindow.add(button, 1, start++);
+            button.setId(Integer.toString(id++));
+            button.setMinWidth(400);
+            button.setOnAction(mbh);
+        }
+        
+        Scene scene = new Scene(mainWindow);
+        root.setTitle("Bank System");
+        root.setScene(scene);
+        root.show();
+    }
+    
 }

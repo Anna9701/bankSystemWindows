@@ -107,7 +107,6 @@ class BankSystem implements Serializable {
                 break;
         case 6:
                 display.displayTable(users);
-                //display.displayUsers(users);
                 break;
         case 7:
                 displaySpecific();
@@ -181,7 +180,7 @@ class BankSystem implements Serializable {
         alert.setTitle("Confirmation");
         alert.setContentText("Do you really want to " + text + " this user?\n\n" + u.toString());
         alert.setResizable(true);
-        alert.getDialogPane().setPrefWidth(600);
+        alert.getDialogPane().setPrefWidth(800);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
             return true;

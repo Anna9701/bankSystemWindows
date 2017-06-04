@@ -4,6 +4,7 @@ import java.util.Formatter;
 
 class NoUserFindException extends Exception {}
 
+
 class User implements java.io.Serializable {
     private final int systemNumber;
     private final String firstname;
@@ -16,10 +17,9 @@ class User implements java.io.Serializable {
     
 
     User(int sNo, String fname, String lname, long p, String adr, double money) throws noPasswordException{
-        
         systemNumber = sNo;
-        firstname = fname;
-        lastname = lname;
+        firstname = addName(fname);
+        lastname = addName(lname);
         pesel = p;
         adress = adr;
         account = new Account (money);
@@ -30,7 +30,17 @@ class User implements java.io.Serializable {
             throw e;
         }
     }
-
+    
+    String addName(String text) {
+        char [] tmp = text.toCharArray();
+        for(int i=1; i < text.length(); i++) {
+            tmp[i] = Character.toLowerCase(tmp[i]);
+        }
+        tmp[0] = Character.toUpperCase(tmp[0]);
+        
+        return new String(tmp);
+    }
+    
     boolean checkPassword(String p) {
         return passwordsutil.checkPassword(p);
     }
