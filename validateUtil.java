@@ -13,8 +13,13 @@ import javafx.scene.control.TextField;
  * @author esperanza
  */
 public class validateUtil {
-     private static displayUtil display = new displayUtil();
+    private static displayUtil display = new displayUtil();
+    BankSystem bs;
     
+    validateUtil(BankSystem b) {
+        bs = b;
+    }
+     
     boolean checkUser(ArrayList<TextField> textFields) {
         boolean flag = true;
         flag = checkSystemNumber(textFields.get(0));
@@ -73,6 +78,18 @@ public class validateUtil {
         return true;
     }
     
+    /*boolean checkUniquePesel(long pesel) { //  nie dziala! 
+        try {
+            User usr = bs.find.findByPesel(pesel);
+        } catch (NoUserFindException ex) {
+            return true;
+        } catch (NullPointerException ex) {
+            return true;
+        }
+        display.alert("There is already account with that PESEL!");
+        return false;
+    }*/
+    
     boolean checkPesel(TextField tf) {
         String text = tf.getText();
         long number;
@@ -91,6 +108,11 @@ public class validateUtil {
             return false;
         }
         
-        return true;
+    //    if(checkUniquePesel(number)) {        
+            return true;
+     //   } else {
+    //        tf.clear();
+  //          return false;
+   //     }
     }
 }

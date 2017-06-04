@@ -327,7 +327,7 @@ class addUserButton implements EventHandler<ActionEvent> {
     ArrayList <TextField> textFields;
     BankSystem bs;
     Stage stg;
-    validateUtil validate = new validateUtil();
+    validateUtil validate = new validateUtil(bs);
     boolean flag = true;
     
     addUserButton(ArrayList<TextField> tf, Stage s, BankSystem b) {
@@ -351,14 +351,7 @@ class addUserButton implements EventHandler<ActionEvent> {
         }
     }
     
-    boolean checkUniquePesel(long pesel) {
-        try {
-            User usr = bs.find.findByPesel(pesel);
-        } catch (NoUserFindException ex) {
-            return true;
-        }
-        return false;
-    }
+    
 }
 
 
