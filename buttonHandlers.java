@@ -7,6 +7,8 @@ package bank;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -347,6 +349,15 @@ class addUserButton implements EventHandler<ActionEvent> {
 
             stg.close();
         }
+    }
+    
+    boolean checkUniquePesel(long pesel) {
+        try {
+            User usr = bs.find.findByPesel(pesel);
+        } catch (NoUserFindException ex) {
+            return true;
+        }
+        return false;
     }
 }
 

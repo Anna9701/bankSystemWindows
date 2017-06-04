@@ -25,7 +25,7 @@ class BankSystem implements Serializable {
     private ArrayList<User> users;
     private String filename;
     private transient Scanner in = new Scanner (System.in);
-    static findUtil find;
+    final findUtil find;
     private static displayUtil display = new displayUtil();
     private static paymentUtil payments;
     private static int procedure;

@@ -25,7 +25,7 @@ public class Bank extends Application {
     BankSystem bankSystem;
     displayUtil display = new displayUtil();
     static int procedure;
-    loginUtil loginutil = new loginUtil();
+    loginUtil loginutil = new loginUtil(bankSystem);
 
     @Override
     public void start(Stage primaryStage) {

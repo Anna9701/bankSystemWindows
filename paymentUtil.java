@@ -5,9 +5,6 @@
  */
 package bank;
 
-import static bank.BankSystem.find;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -43,7 +40,7 @@ public class paymentUtil {
                 if (number == -1) {
                     return;
                 }
-                topay = find.findByNumber(number);
+                topay = bank.find.findByNumber(number);
                 if(bank.confirm("payment", topay)) {
                     try {
                         payment(topay, stg, 1);
@@ -66,7 +63,7 @@ public class paymentUtil {
             if(number == -1) {
                 return;
             }
-            totake = find.findByNumber(number);
+            totake = bank.find.findByNumber(number);
             if(bank.confirm("payout", totake)) {
                 try {
                     payment(totake, stg, 0);
@@ -144,7 +141,7 @@ public class paymentUtil {
             if(number1 == -1) {
                 return;
             }
-            user1 = find.findByNumber(number1);         
+            user1 = bank.find.findByNumber(number1);         
         } catch (NoUserFindException e) {
             display.alert("No such user find.");
             stg.close();
@@ -156,7 +153,7 @@ public class paymentUtil {
             if(number2 == -1) {
                 return;
             }
-            user2 = find.findByNumber(number2);
+            user2 = bank.find.findByNumber(number2);
         } catch (NoUserFindException e) {
             display.alert("No such user find.");
             stg.close();

@@ -28,7 +28,11 @@ import javafx.stage.Stage;
  */
 public class loginUtil implements java.io.Serializable {
     displayUtil display = new displayUtil();
-  
+    BankSystem bs;
+    
+    loginUtil(BankSystem b) {
+        bs = b;
+    }
     
     User logInClient() {
         User usr = null;
@@ -123,7 +127,7 @@ public class loginUtil implements java.io.Serializable {
             String text = tf.getText();
             try {
               int number = Integer.parseInt(text);
-              usr = BankSystem.find.findByNumber(number);
+              usr = bs.find.findByNumber(number);
             } catch (NoUserFindException ex) {
                 new displayUtil().alert("No such user found!");
                 Platform.exit();
