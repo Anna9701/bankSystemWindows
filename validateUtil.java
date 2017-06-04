@@ -21,6 +21,7 @@ public class validateUtil {
         flag = checkName(textFields.get(1));
         flag = checkName(textFields.get(2));
         flag = checkPesel(textFields.get(3));
+        flag = checkAddress(textFields.get(4));
         
         return flag;
     }
@@ -33,7 +34,6 @@ public class validateUtil {
         for(char c : text.toCharArray()) {
             if(Character.isLetter(c)) {
                 i++;
-                Character.toLowerCase(c);
             } else if (Character.isSpaceChar(c)) {
                 flag = true;
             } else if (Character.isDigit(c)) {
@@ -44,9 +44,7 @@ public class validateUtil {
                 }
             }
         }
-        
-        Character.toUpperCase(text.charAt(0));
-        tf.setText(text);
+ 
         return true;
     }
     
@@ -58,12 +56,8 @@ public class validateUtil {
                 display.alert("Name cannot contains digits");
                 return false;
             }
-            Character.toLowerCase(c);
         }
-        
-        Character.toUpperCase(text.charAt(0));
-        System.out.println(text);
-        tf.setText(text);
+       
         return true;
     }
     
@@ -85,8 +79,9 @@ public class validateUtil {
         try {
             number = Long.parseLong(text);
         } catch (NumberFormatException e) {
-            tf.clear();
             display.alert("Wrong format of input to PESEL field!");
+            
+            tf.clear();
             return false;
         }
         

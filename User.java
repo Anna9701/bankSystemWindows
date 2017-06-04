@@ -18,10 +18,10 @@ class User implements java.io.Serializable {
 
     User(int sNo, String fname, String lname, long p, String adr, double money) throws noPasswordException{
         systemNumber = sNo;
-        firstname = addName(fname);
-        lastname = addName(lname);
+        firstname = addText(fname);
+        lastname = addText(lname);
         pesel = p;
-        adress = adr;
+        adress = addText(adr);
         account = new Account (money);
         passwordsutil = new passwordsUtil(this);
         try {
@@ -31,10 +31,12 @@ class User implements java.io.Serializable {
         }
     }
     
-    String addName(String text) {
+    String addText(String text) {
         char [] tmp = text.toCharArray();
         for(int i=1; i < text.length(); i++) {
-            tmp[i] = Character.toLowerCase(tmp[i]);
+            if(Character.isLetter(tmp[i])) {
+                tmp[i] = Character.toLowerCase(tmp[i]);
+            }
         }
         tmp[0] = Character.toUpperCase(tmp[0]);
         
