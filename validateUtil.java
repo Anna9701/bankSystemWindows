@@ -27,8 +27,23 @@ public class validateUtil {
         flag = checkName(textFields.get(2));
         flag = checkPesel(textFields.get(3));
         flag = checkAddress(textFields.get(4));
+        flag = checkAmount(textFields.get(5));
         
         return flag;
+    }
+    
+    boolean checkAmount(TextField tf) {
+        String text = tf.getText();
+
+        try {
+            Double.parseDouble(text);
+        } catch (NumberFormatException ex) {
+            display.alert("Money has to be numbers!");
+            tf.clear();
+            return false;
+        }
+        
+        return true;
     }
     
     boolean checkAddress(TextField tf) {
