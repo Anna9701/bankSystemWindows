@@ -174,9 +174,10 @@ public class paymentUtil {
     
     void transferForClient (User user, User target, Stage stg) { 
         String txt1 = "transfer money to";
+        double money = 0;
         try {
             if(bank.confirm(txt1, target)) {
-                double money = payOutTransfer(user, stg);
+                money = payOutTransfer(user, stg);
                 if(money > 0) {
                     payIn(target, money);
                 }
@@ -184,6 +185,8 @@ public class paymentUtil {
         } catch (NoResourcesException e) {
             display.alert("No resources to do this!");
         }
+        Transaction t = new Transaction(user, target, money);
+        user.history.addTransaction(t);
     }
     
     private void payIn(User topay, double money) {

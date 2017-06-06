@@ -14,7 +14,7 @@ class User implements java.io.Serializable {
     Account account;
     private String pass;
     private final passwordsUtil passwordsutil;
-    
+    historyUtilClient history = new historyUtilClient ();
 
     User(int sNo, String fname, String lname, long p, String adr, double money) throws noPasswordException{
         systemNumber = sNo;
