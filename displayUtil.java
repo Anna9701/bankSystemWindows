@@ -75,11 +75,13 @@ public class displayUtil {
         Button btn2 = new Button("Display account");
         Button btn3 = new Button("Delete Account");
         Button btn4 = new Button("Change Password"); 
+        Button btn5 = new Button("History of transaction");
         
         buttons.add(btn1);
         buttons.add(btn2);
         buttons.add(btn3);
         buttons.add(btn4);
+        buttons.add(btn5);
         
         return buttons;
     }
@@ -190,6 +192,35 @@ public class displayUtil {
         stg.show();
     }
     
+    void displayHistory(ArrayList<String> history) {
+        Stage stg = createStage("History");
+        GridPane window = createGridPane();
+        window.setMinSize(900, 900);
+        final ObservableList data = FXCollections.observableArrayList();
+        data.addAll(history);
+        final ListView listView = new ListView(data);
+        listView.setMinSize(800, 500);
+        listView.setEditable(false);
+        listView.autosize();
+        listView.setItems(data);
+        listView.setCellFactory(ComboBoxListCell.forListView(data));   
+
+        Button btn = new Button ("Close");
+        btn.setOnAction(new cancelButton(stg));
+        btn.setTranslateX(150);
+        btn.setMinWidth(500);
+
+        StackPane root = new StackPane();
+        root.getChildren().add(listView);
+       
+
+    //    window.add(txt, 0, 1);
+        window.add(root, 0, 2);
+        window.add(btn, 0, 3);
+
+        stg.setScene(new Scene(window, 900, 500));
+        stg.show();
+    }
     
     void displayUser(User user) {
         Stage stg = createStage("Bank Account");

@@ -186,7 +186,9 @@ public class paymentUtil {
             display.alert("No resources to do this!");
         }
         Transaction t = new Transaction(user, target, money);
-        user.history.addTransaction(t);
+        t.transactionBeetwen();
+        user.history.add(t.getResult1());
+        user.history.add(t.getResult2());
     }
     
     private void payIn(User topay, double money) {

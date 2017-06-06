@@ -1,6 +1,17 @@
 package bank;
 
+import java.util.ArrayList;
 import java.util.Formatter;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.cell.ComboBoxListCell;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 class NoUserFindException extends Exception {}
 
@@ -14,7 +25,7 @@ class User implements java.io.Serializable {
     Account account;
     private String pass;
     private final passwordsUtil passwordsutil;
-    historyUtilClient history = new historyUtilClient ();
+    ArrayList<String> history = new ArrayList<> ();
 
     User(int sNo, String fname, String lname, long p, String adr, double money) throws noPasswordException{
         systemNumber = sNo;
@@ -91,6 +102,11 @@ class User implements java.io.Serializable {
     void setPassword(String s) {
         pass = s;
     }
+    
+    ArrayList<String> getHistory () {
+        return history;
+    }
+    
 }
 
 

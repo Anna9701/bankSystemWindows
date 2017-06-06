@@ -148,6 +148,9 @@ class BankSystem implements Serializable {
         case 4:
                 new passwordsUtil(user).changePassword();
                 break;
+        case 5:
+                display.displayHistory(user.getHistory());
+                break;
         }
     }
     
