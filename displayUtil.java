@@ -41,7 +41,7 @@ public class displayUtil {
         Button btn5 = new Button("Transofrm money between accounts");
         Button btn6 = new Button("Display information about all accounts");
         Button btn7 = new Button("Display information about specific accounts");
-       
+        Button btn8 = new Button("History of transaction");
         
         ArrayList<Button> buttons = new ArrayList<>();
         buttons.add(btn1);
@@ -51,7 +51,7 @@ public class displayUtil {
         buttons.add(btn5);
         buttons.add(btn6);
         buttons.add(btn7);
-     
+        buttons.add(btn8);
         
         return buttons;
     }
@@ -199,7 +199,7 @@ public class displayUtil {
         final ObservableList data = FXCollections.observableArrayList();
         data.addAll(history);
         final ListView listView = new ListView(data);
-        listView.setMinSize(800, 500);
+        listView.setMinSize(800, 400);
         listView.setEditable(false);
         listView.autosize();
         listView.setItems(data);

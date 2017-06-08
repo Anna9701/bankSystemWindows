@@ -33,7 +33,7 @@ public class paymentUtil {
     void toPay() {
         Stage stg = display.createStage("Payment");
         stg.setOnCloseRequest(new closeWindowButton(stg, bank, true));
-        User topay;
+        User topay = null;
         String text2 = "payment";
             try {   
                 int number = enter.enterUserNumber(text2, stg);
@@ -44,17 +44,18 @@ public class paymentUtil {
                 if(bank.confirm("payment", topay)) {
                     try {
                         payment(topay, stg, 1);
-                    } catch (NoResourcesException er) {
-
-                    }
+                    } catch (NoResourcesException er) {}
                 }
             } catch (NoUserFindException e1) {
                 display.alert("No such user find!");
             }
+            
+           
     }
     
     void toTake() {
-        User totake;
+        User totake = null;
+        double money = 0;
         Stage stg = display.createStage("Payment");
         stg.setOnCloseRequest(new closeWindowButton(stg, bank, true));
         String text2 = "pay out";
@@ -74,6 +75,7 @@ public class paymentUtil {
         } catch (NoUserFindException e1) {
             display.alert("No such user find!");
         }
+  
     }
     
     void payment(User toPay, Stage stg, int mode) throws NoResourcesException {
@@ -85,8 +87,9 @@ public class paymentUtil {
         
         Button b1 = new Button("Cancel");
         Button b2 = new Button("Apply");
-        b1.setOnAction(new cancelButton(stg));       
-        b2.setOnAction(new applyPaymentButton (textField1, lb2, mode, bank, stg, toPay));
+        b1.setOnAction(new cancelButton(stg));
+        applyPaymentButton aPB = new applyPaymentButton (textField1, lb2, mode, bank, stg, toPay);
+        b2.setOnAction(aPB);
          
 
         mainWindow.add(lb, 1, 1);
@@ -96,7 +99,8 @@ public class paymentUtil {
         mainWindow.add(b2, 1, 2);
         Scene scene = new Scene(mainWindow);
         stg.setScene(scene);
-        stg.show();
+        stg.showAndWait();
+        
     }
     
     double payOutTransfer(User topayout, Stage stg) throws NoResourcesException {
@@ -133,7 +137,7 @@ public class paymentUtil {
     void transferMoney() {
         User user1, user2;
         String txt1 = "pay in", txt2 = "take from";
-        Stage stg = display.createStage("transform");
+        Stage stg = display.createStage("Transfer");
         stg.setOnCloseRequest(new closeWindowButton(stg, bank, true));
         
         try {
@@ -159,10 +163,10 @@ public class paymentUtil {
             stg.close();
             return;
         }
-
+        double money = 0;
         try {
             if(bank.confirm(txt2, user2) && bank.confirm(txt1, user1)) {
-                double money = payOutTransfer(user2, stg);
+                money = payOutTransfer(user2, stg);
                 if(money > 0) {
                     payIn(user1, money);
                 }
@@ -170,6 +174,10 @@ public class paymentUtil {
         } catch (NoResourcesException e) {
             display.alert("No resources to do this!");
         }
+        
+        Transaction t = new Transaction(user2, user1, money);
+        t.addToUsers();
+        t.addToBankTransfer(bank);
     }
     
     void transferForClient (User user, User target, Stage stg) { 
@@ -186,9 +194,7 @@ public class paymentUtil {
             display.alert("No resources to do this!");
         }
         Transaction t = new Transaction(user, target, money);
-        t.transactionBeetwen();
-        user.history.add(t.getResult1());
-        user.history.add(t.getResult2());
+        t.addToBankTransfer(bank);
     }
     
     private void payIn(User topay, double money) {

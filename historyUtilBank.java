@@ -17,8 +17,7 @@ import javafx.scene.text.Text;
 class Transaction {
     User from;
     User to;
-    Double amount;
-    boolean both;
+    double amount;
     String result = new String ();
     String result2 = new String ();
     
@@ -26,25 +25,25 @@ class Transaction {
         from = a;
         to = b;
         amount = money;
-        both = true;
     }
     
     Transaction (User a, double money) {
         from = a;
         amount = money;
-        both = false;
     }
     
     void transactionIn() {
-        result += from.getNumber() + from.getName() + from.getLastName();
         LocalDateTime localdatetime = LocalDateTime.now();
-        result += amount + "Pay in" + localdatetime.toString();
+        Formatter format1 = new Formatter();
+        format1.format("%-15d%-20s%-20s%-15.2f%-20s%-20s\n", from.getNumber(), from.getName(), from.getLastName(), amount, "pay out", localdatetime.toString());
+        result = format1.toString();
     }
     
     void transactionOut() {
-        result += from.getNumber() + from.getName() + from.getLastName();
         LocalDateTime localdatetime = LocalDateTime.now();
-        result += amount + "Pay out" + localdatetime.toString();
+        Formatter format1 = new Formatter();
+        format1.format("%-15d%-20s%-20s%-15.2f%-20s%-20s\n", from.getNumber(), from.getName(), from.getLastName(), amount, "pay out", localdatetime.toString());
+        result = format1.toString();
     }
     
     void transactionBeetwen() {
@@ -63,5 +62,37 @@ class Transaction {
     
     String getResult2 () {
         return result2;
+    }
+    
+    void addToUserIn (User usr) {
+        transactionIn();
+        usr.history.add(getResult1());
+    }
+    
+    void addToUserOut (User usr) {
+        transactionOut();
+        usr.history.add(getResult1());
+    }
+    
+    void addToUsers () {
+        transactionBeetwen();
+        from.history.add(getResult1());
+        to.history.add(getResult2());
+    }
+    
+    void addToBankPayIn (BankSystem bs) {
+        transactionIn();
+        bs.addToHistory(getResult1());
+    }
+    
+    void addToBankPayOut (BankSystem bs) {
+        transactionOut();
+        bs.addToHistory(getResult1());
+    }
+    
+    void addToBankTransfer (BankSystem bs) {
+        transactionBeetwen();
+        bs.addToHistory(getResult1());
+        bs.addToHistory(getResult2());
     }
 }

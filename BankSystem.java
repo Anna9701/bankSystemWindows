@@ -30,7 +30,7 @@ class BankSystem implements Serializable {
     private static paymentUtil payments;
     private static int procedure;
     private static final enterUtil enter = new enterUtil();
- 
+    private ArrayList<String> history = null;
     
     BankSystem(String file, int mode, int md) {
         if(mode == 1) {
@@ -41,19 +41,25 @@ class BankSystem implements Serializable {
                 ois.close();
                 this.users = tmp1.users;
                 this.filename = tmp1.filename;
+                this.history = tmp1.history;
             } catch (Exception e) {
                 display.alert("We can't load this bank database! Sorry!");
                 Platform.exit();
             }
         } else {
             filename = file;
-            users = new ArrayList<User> ();
+            users = new ArrayList<> ();
+            history = new ArrayList<> ();
         }
         find = new findUtil(in, users);
         payments = new paymentUtil(this);
         BankSystem.procedure = md;
     }
-
+    
+    void addToHistory (String s) {
+        history.add(s);
+    }
+    
     void saveState() {
         try{
                 FileOutputStream fos = new FileOutputStream(filename);
@@ -111,6 +117,9 @@ class BankSystem implements Serializable {
         case 7:
                 displaySpecific();
                 break;
+        case 8: 
+                display.displayHistory(history);
+                break;
         }
     }
     
@@ -132,6 +141,10 @@ class BankSystem implements Serializable {
         
         payments.transferForClient(user, target, stg);
           
+    }
+    
+    ArrayList<String> getHistory () {
+        return history;
     }
     
     void menuForClient(int choise, User user) throws noPasswordException {
