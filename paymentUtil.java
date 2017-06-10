@@ -195,6 +195,7 @@ public class paymentUtil {
         }
         Transaction t = new Transaction(user, target, money);
         t.addToBankTransfer(bank);
+        t.addToUsers();
     }
     
     private void payIn(User topay, double money) {

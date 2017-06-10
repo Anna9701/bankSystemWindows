@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,9 +29,8 @@ class BankSystem implements Serializable {
     static findUtil find;
     private static displayUtil display = new displayUtil();
     private static paymentUtil payments;
-    private static int procedure;
     private static final enterUtil enter = new enterUtil();
-    private ArrayList<String> history = null;
+    private LinkedList<String> history = null;
     
     BankSystem(String file, int mode, int md) {
         if(mode == 1) {
@@ -41,7 +41,7 @@ class BankSystem implements Serializable {
                 ois.close();
                 this.users = tmp1.users;
                 this.filename = tmp1.filename;
-                this.history = tmp1.history;
+                this.history = tmp1.history;    
             } catch (Exception e) {
                 display.alert("We can't load this bank database! Sorry!");
                 Platform.exit();
@@ -49,15 +49,14 @@ class BankSystem implements Serializable {
         } else {
             filename = file;
             users = new ArrayList<> ();
-            history = new ArrayList<> ();
+            history = new LinkedList<> ();
         }
         find = new findUtil(in, users);
         payments = new paymentUtil(this);
-        BankSystem.procedure = md;
     }
     
     void addToHistory (String s) {
-        history.add(s);
+        history.addFirst(s);
     }
     
     void saveState() {
@@ -143,7 +142,7 @@ class BankSystem implements Serializable {
           
     }
     
-    ArrayList<String> getHistory () {
+    LinkedList<String> getHistory () {
         return history;
     }
     

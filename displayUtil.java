@@ -7,6 +7,7 @@ package bank;
 
 import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.LinkedList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -192,7 +193,7 @@ public class displayUtil {
         stg.show();
     }
     
-    void displayHistory(ArrayList<String> history) {
+    void displayHistory(LinkedList<String> history) {
         Stage stg = createStage("History");
         GridPane window = createGridPane();
         window.setMinSize(900, 900);

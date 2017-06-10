@@ -2,6 +2,7 @@ package bank;
 
 import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.LinkedList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -25,7 +26,7 @@ class User implements java.io.Serializable {
     Account account;
     private String pass;
     private final passwordsUtil passwordsutil;
-    ArrayList<String> history = new ArrayList<> ();
+    LinkedList<String> history;
 
     User(int sNo, String fname, String lname, long p, String adr, double money) throws noPasswordException{
         systemNumber = sNo;
@@ -35,11 +36,16 @@ class User implements java.io.Serializable {
         adress = addText(adr);
         account = new Account (money);
         passwordsutil = new passwordsUtil(this);
+        history = new LinkedList<> ();
         try {
             passwordsutil.changePassword();
         } catch (noPasswordException e) {
             throw e;
         }
+    }
+    
+    void addToHistory (String txt) {
+        history.addFirst(txt);
     }
     
     String addText(String text) {
@@ -103,7 +109,7 @@ class User implements java.io.Serializable {
         pass = s;
     }
     
-    ArrayList<String> getHistory () {
+    LinkedList<String> getHistory () {
         return history;
     }
     

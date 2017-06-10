@@ -35,7 +35,7 @@ class Transaction {
     void transactionIn() {
         LocalDateTime localdatetime = LocalDateTime.now();
         Formatter format1 = new Formatter();
-        format1.format("%-15d%-20s%-20s%-15.2f%-20s%-20s\n", from.getNumber(), from.getName(), from.getLastName(), amount, "pay out", localdatetime.toString());
+        format1.format("%-15d%-20s%-20s%-15.2f%-20s%-20s\n", from.getNumber(), from.getName(), from.getLastName(), amount, "pay in", localdatetime.toString());
         result = format1.toString();
     }
     
@@ -49,10 +49,10 @@ class Transaction {
     void transactionBeetwen() {
         LocalDateTime localdatetime = LocalDateTime.now();
         Formatter format1 = new Formatter();
-        format1.format("%-15d%-20s%-20s%-15.2f%-20s%-20s\n", from.getNumber(), from.getName(), from.getLastName(), amount, "pay out", localdatetime.toString());
+        format1.format("%-15d%-20s%-20s%-15.2f%-20s%-20s\n", from.getNumber(), from.getName(), from.getLastName(), amount, "Transfer:out", localdatetime.toString());
         result = format1.toString();
         Formatter format2 = new Formatter();
-        format2.format("%-15d%-20s%-20s%-15.2f%-20s%-20s\n", to.getNumber(), to.getName(), to.getLastName(), amount, "pay in", localdatetime.toString());
+        format2.format("%-15d%-20s%-20s%-15.2f%-20s%-20s\n", to.getNumber(), to.getName(), to.getLastName(), amount, "Transfer:in", localdatetime.toString());
         result2 = format2.toString();
     }
     
@@ -66,18 +66,21 @@ class Transaction {
     
     void addToUserIn (User usr) {
         transactionIn();
-        usr.history.add(getResult1());
+        usr.addToHistory(getResult1());
     }
     
     void addToUserOut (User usr) {
         transactionOut();
-        usr.history.add(getResult1());
+        usr.addToHistory(getResult1());
+
     }
     
     void addToUsers () {
         transactionBeetwen();
-        from.history.add(getResult1());
-        to.history.add(getResult2());
+        from.addToHistory(getResult1());
+        from.addToHistory(getResult2());
+        to.addToHistory(getResult1());
+        to.addToHistory(getResult2());
     }
     
     void addToBankPayIn (BankSystem bs) {

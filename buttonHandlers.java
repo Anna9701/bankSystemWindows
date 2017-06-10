@@ -219,22 +219,23 @@ class applyPaymentButton implements EventHandler<ActionEvent> {
             textField1.clear();
         } else {
             t = new Transaction(toPay, moneytopay);
-            if(mode == 1) {
-                if(bank.confirm("amount " + Double.toString(moneytopay))) {
+            if(bank.confirm("amount " + Double.toString(moneytopay))) {
+                if(mode == 1) {
                     toPay.account.payment(moneytopay);
                     t.addToUserIn(toPay);
                     t.addToBankPayIn(bank);
                     stg.hide();
                 }
-            } else {
-                try {
-                    toPay.account.payout(moneytopay);
-                    t.addToUserOut(toPay);
-                    t.addToBankPayOut(bank);
-                    stg.hide();
-                } catch (NoResourcesException ee) {
-                    display.setText("There is no resources to do this!", lb2);
-                    textField1.clear();
+                else {
+                    try {
+                        toPay.account.payout(moneytopay);
+                        t.addToUserOut(toPay);
+                        t.addToBankPayOut(bank);
+                        stg.hide();
+                    } catch (NoResourcesException ee) {
+                        display.setText("There is no resources to do this!", lb2);
+                        textField1.clear();
+                    }
                 }
             }
         }
