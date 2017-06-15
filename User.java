@@ -1,18 +1,7 @@
 package bank;
 
-import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.LinkedList;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.cell.ComboBoxListCell;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 class NoUserFindException extends Exception {}
 

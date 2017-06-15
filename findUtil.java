@@ -6,7 +6,6 @@
 package bank;
 
 import java.util.Iterator;
-import java.util.Scanner;
 import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,13 +15,11 @@ import javafx.stage.Stage;
 
 
 public class findUtil {
-    private transient Scanner in = new Scanner (System.in);
     private ArrayList<User> users;
     private displayUtil display = new displayUtil();
     private enterUtil enter = new enterUtil();
     
-    findUtil(Scanner in, ArrayList<User> users) {
-       this.in = in;
+    findUtil(ArrayList<User> users) {
        this.users = users;
     }
     

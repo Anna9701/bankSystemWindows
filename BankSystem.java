@@ -7,12 +7,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Optional;
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -25,7 +22,6 @@ import javafx.stage.Stage;
 class BankSystem implements Serializable {
     private ArrayList<User> users;
     private String filename;
-    private transient Scanner in = new Scanner (System.in);
     static findUtil find;
     private static displayUtil display = new displayUtil();
     private static paymentUtil payments;
@@ -51,7 +47,7 @@ class BankSystem implements Serializable {
             users = new ArrayList<> ();
             history = new LinkedList<> ();
         }
-        find = new findUtil(in, users);
+        find = new findUtil(users);
         payments = new paymentUtil(this);
     }
     
@@ -245,10 +241,13 @@ class BankSystem implements Serializable {
             return;
         }
         if(confirm("add", add)) {
-            users.add(add);
+            addUser(add);
         }
     }
-
+    
+    void addUser (User tmp) {
+        users.add(tmp);
+    }
     
     
     void displaySpecific() {
