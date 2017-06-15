@@ -44,6 +44,18 @@ class User implements java.io.Serializable {
         }
     }
     
+    User(int sNo, String fname, String lname, long p, String adr, double money, String pas) {
+        systemNumber = sNo;
+        firstname = addText(fname);
+        lastname = addText(lname);
+        pesel = p;
+        adress = addText(adr);
+        account = new Account (money);
+        passwordsutil = new passwordsUtil(this);
+        history = new LinkedList<> ();
+        pass = pas;
+    }
+    
     void addToHistory (String txt) {
         history.addFirst(txt);
     }
@@ -67,6 +79,8 @@ class User implements java.io.Serializable {
     void display () {
         System.out.println(systemNumber + "\t" + firstname + "\t" + lastname + "\t" + pesel + "\t" + adress + "\t" + account.getResources());
     }
+    
+ 
 
     @Override
     public String toString() {
@@ -103,7 +117,7 @@ class User implements java.io.Serializable {
         return pass;
     }
     
-  
+   
     
     void setPassword(String s) {
         pass = s;

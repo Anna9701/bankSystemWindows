@@ -93,17 +93,6 @@ public class validateUtil {
         return true;
     }
     
-    /*boolean checkUniquePesel(long pesel) { //  nie dziala! 
-        try {
-            User usr = bs.find.findByPesel(pesel);
-        } catch (NoUserFindException ex) {
-            return true;
-        } catch (NullPointerException ex) {
-            return true;
-        }
-        display.alert("There is already account with that PESEL!");
-        return false;
-    }*/
     
     boolean checkPesel(TextField tf) {
         String text = tf.getText();
@@ -123,11 +112,8 @@ public class validateUtil {
             return false;
         }
         
-    //    if(checkUniquePesel(number)) {        
-            return true;
-     //   } else {
-    //        tf.clear();
-  //          return false;
-   //     }
+     
+        return true;
+
     }
 }

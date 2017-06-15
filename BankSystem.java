@@ -32,7 +32,7 @@ class BankSystem implements Serializable {
     private static final enterUtil enter = new enterUtil();
     private LinkedList<String> history = null;
     
-    BankSystem(String file, int mode, int md) {
+    BankSystem(String file, int mode) {
         if(mode == 1) {
             try{
                 FileInputStream fis = new FileInputStream(file);

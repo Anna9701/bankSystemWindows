@@ -23,12 +23,14 @@ import javafx.scene.control.ToggleGroup;
  */
 public class Bank extends Application {
     BankSystem bankSystem;
+    Stage primaStage;
     displayUtil display = new displayUtil();
     static int procedure;
     loginUtil loginutil = new loginUtil(bankSystem);
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage){
+        primaStage = primaryStage;
         primaryStage.setOnCloseRequest(new exitButton(primaryStage, bankSystem, false));
         initUI(primaryStage);
     }

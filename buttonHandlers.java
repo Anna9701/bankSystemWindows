@@ -108,9 +108,9 @@ class MyButtonHandler implements EventHandler<ActionEvent> {
         String value = btn.getText();
         String text = name.getText();
         if(value.equals("Create")) {
-            bank.bankSystem = new BankSystem(text, 0, mode);
+            bank.bankSystem = new BankSystem(text, 0);
         } else {
-            bank.bankSystem = new BankSystem(text, 1, mode);
+            bank.bankSystem = new BankSystem(text, 1);
         }
         bank.menu(root);
     }
